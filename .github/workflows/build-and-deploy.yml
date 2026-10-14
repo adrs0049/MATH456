@@ -1,0 +1,166 @@
+name: build-and-deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  BASE_URL: /${{ github.event.repository.name }}
+  NODE_OPTIONS: '--max-old-space-size=12288'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  # ── Job 1: Build myst-theme ──────────────────────────────────────────
+  build-theme:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: myst-theme/package-lock.json
+
+    - name: Build myst-theme into _theme/
+      run: make theme
+
+    - name: Upload built theme
+      uses: actions/upload-artifact@v4
+      with:
+        name: myst-theme-build
+        path: _theme/
+        retention-days: 1
+
+  # ── Job 2: Build PDFs (needs theme) ─────────────────────────────────
+  build-pdfs:
+    needs: [build-theme]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Download built theme
+      uses: actions/download-artifact@v4
+      with:
+        name: myst-theme-build
+        path: _theme/
+
+    - name: Fix esbuild permissions
+      run: |
+        find _theme -name "esbuild" -type f -exec chmod +x {} \;
+        find _theme -name "*.node" -type f -exec chmod +x {} \;
+
+    - name: Cache PDF exports
+      uses: actions/cache@v4
+      id: pdf-cache
+      with:
+        path: |
+          exports/
+          */exports/
+        key: pdfs-${{ hashFiles('**/*.md', 'myst.yml', '_templates/**', 'requirements.txt') }}
+
+    - name: Set up Python
+      if: steps.pdf-cache.outputs.cache-hit != 'true'
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+
+    - name: Install dependencies
+      if: steps.pdf-cache.outputs.cache-hit != 'true'
+      run: pip install -r requirements.txt
+
+    - name: Install LaTeX
+      if: steps.pdf-cache.outputs.cache-hit != 'true'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-science texlive-xetex latexmk librsvg2-bin imagemagick
+        sudo sed -i 's/rights="none" pattern="SVG"/rights="read|write" pattern="SVG"/' /etc/ImageMagick-6/policy.xml || true
+        sudo sed -i 's/rights="none" pattern="PDF"/rights="read|write" pattern="PDF"/' /etc/ImageMagick-6/policy.xml || true
+
+    - name: Build PDFs
+      if: steps.pdf-cache.outputs.cache-hit != 'true'
+      timeout-minutes: 20
+      run: |
+        jupyter-book build --pdf --execute
+
+    - name: Upload PDF exports
+      uses: actions/upload-artifact@v4
+      with:
+        name: pdf-exports
+        path: |
+          exports/
+          */exports/
+        retention-days: 1
+
+  # ── Job 3: Build HTML + Deploy (needs theme + PDFs) ─────────────────
+  build-html-deploy:
+    needs: [build-theme, build-pdfs]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Download built theme
+      uses: actions/download-artifact@v4
+      with:
+        name: myst-theme-build
+        path: _theme/
+
+    - name: Fix esbuild permissions
+      run: |
+        find _theme -name "esbuild" -type f -exec chmod +x {} \;
+        find _theme -name "*.node" -type f -exec chmod +x {} \;
+
+    - name: Download PDF exports
+      uses: actions/download-artifact@v4
+      with:
+        name: pdf-exports
+        path: .
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Build the book
+      timeout-minutes: 45
+      run: |
+        jupyter-book build --html --execute
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: './_build/html'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

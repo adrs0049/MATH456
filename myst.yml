@@ -1,0 +1,126 @@
+# See docs at: https://mystmd.org/guide
+version: 1
+project:
+  id: math456-notes
+  plugins:
+    - latex-handlers.mjs
+  settings:
+    output_matplotlib_strings: remove
+  title: MATH 456 Notes
+  description: Nonlinear dynamics for mathematical biology, from a force balance to the phase plane
+  short_title: MATH 456
+  authors:
+    - name: Andreas Buttenschoen
+      email: andreas.buttenschoen@umass.edu
+      affiliations:
+        - University of Massachusetts Amherst
+  copyright: '2026'
+  github: adrs0049/MATH456
+  license: CC-BY-NC-SA-4.0
+  bibliography:
+    - references.bib
+  abbreviations:
+    ODE: Ordinary Differential Equation
+    QSS: Quasi-Steady State
+  math:
+    '\ve': '\varepsilon'
+    '\dd': '\mathrm{d}'
+    '\eff': '{\rm eff}'
+    '\mig': '{\rm mig}'
+  exports:
+    - format: pdf
+      template: ./_templates/lecture
+      output: exports/MATH456-notes.pdf
+      id: full-book-pdf
+      articles:
+        # 0. What is a model
+        - file: modeling/index.md
+          level: 1
+        - file: modeling/what-is-a-model.md
+          level: 2
+        - file: modeling/scales-and-forces.md
+          level: 2
+        # I. From Newton's second law to a force balance
+        - file: overdamped/index.md
+          level: 1
+        - file: overdamped/newton-with-drag.md
+          level: 2
+        - file: overdamped/scaling-the-equation.md
+          level: 2
+        - file: overdamped/singular-limit.md
+          level: 2
+        - file: overdamped/force-sets-velocity.md
+          level: 2
+        - file: overdamped/integrating-factor.md
+          level: 2
+        # II. Flows on the line
+        - file: one-dimensional/index.md
+          level: 1
+        - file: one-dimensional/rates-in-rates-out.md
+          level: 2
+        - file: one-dimensional/populations-and-fractions.md
+          level: 2
+        - file: one-dimensional/transcritical.md
+          level: 2
+        - file: one-dimensional/saddle-node.md
+          level: 2
+        - file: one-dimensional/sickle-cell.md
+          level: 2
+        - file: one-dimensional/sickle-cell-without-malaria.md
+          level: 2
+        - file: one-dimensional/pitchfork.md
+          level: 2
+        # III. The phase plane
+        - file: phase-plane/index.md
+          level: 1
+        - file: phase-plane/drug-in-the-plane.md
+          level: 2
+        - file: phase-plane/quasi-steady-state.md
+          level: 2
+        - file: phase-plane/fitzhugh-nagumo.md
+          level: 2
+  downloads:
+    - id: full-book-pdf
+      title: Download Full Book (PDF)
+  toc:
+    - file: index.md
+    - file: modeling/index.md
+      title: "0. What Is a Model"
+      children:
+        - file: modeling/what-is-a-model.md
+        - file: modeling/scales-and-forces.md
+    - file: overdamped/index.md
+      title: "1. From Newton's Second Law to a Force Balance"
+      children:
+        - file: overdamped/newton-with-drag.md
+        - file: overdamped/scaling-the-equation.md
+        - file: overdamped/singular-limit.md
+        - file: overdamped/force-sets-velocity.md
+        - file: overdamped/integrating-factor.md
+    - file: one-dimensional/index.md
+      title: "2. Flows on the Line"
+      children:
+        - file: one-dimensional/rates-in-rates-out.md
+        - file: one-dimensional/populations-and-fractions.md
+        - file: one-dimensional/transcritical.md
+        - file: one-dimensional/saddle-node.md
+        - file: one-dimensional/sickle-cell.md
+        - file: one-dimensional/sickle-cell-without-malaria.md
+        - file: one-dimensional/pitchfork.md
+    - file: phase-plane/index.md
+      title: "3. The Phase Plane"
+      children:
+        - file: phase-plane/drug-in-the-plane.md
+        - file: phase-plane/quasi-steady-state.md
+        - file: phase-plane/fitzhugh-nagumo.md
+    - title: References
+      children:
+        - file: bibliography.md
+site:
+  # Local fork of the book theme with accessibility fixes (submodule, as in
+  # MATH725), assembled into _theme/ by `make theme`.
+  template: ./_theme/template.yml
+  options:
+    folders: true
+    logo_text: MATH 456
+    style: _static/custom.css

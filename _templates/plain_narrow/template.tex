@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[left=0.75in,right=0.75in,top=1in,bottom=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{hyperref}
+\usepackage{datetime}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{enumitem}
+\bibliographystyle{abbrvnat}
+
+%%% Algorithm environment for prf:algorithm directives
+\newcounter{algorithm}
+\renewcommand{\thealgorithm}{\arabic{algorithm}}
+\newenvironment{algorithm}[1][]{%
+  \refstepcounter{algorithm}%
+  \par\vspace{1ex}%
+  \noindent\rule{\linewidth}{0.8pt}%
+  \par\vspace{2pt}%
+  \noindent{\normalfont\textbf{Algorithm~\thealgorithm}%
+    \ifx\relax#1\relax\else~(#1)\fi%
+  .\hspace{0.5em}}%
+}{%
+  \par\vspace{2pt}%
+  \noindent\rule{\linewidth}{0.8pt}%
+  \par\vspace{1ex}%
+}
+
+[-IMPORTS-]
+
+%%% Theorem-like environments. myst declares each with its own counter and
+%%% the italic plain style. Redeclare them so that all share one counter
+%%% (Definition 2.1, Example 2.2, Proposition 2.3, ...) and so that
+%%% definitions, examples and remarks are set upright.
+\makeatletter
+\@ifundefined{c@theorem}{\newtheorem{theorem}{Theorem}[section]}{}
+\newcommand{\redeclaretheorem}[2]{%
+  \expandafter\let\csname #1\endcsname\relax
+  \expandafter\let\csname end#1\endcsname\relax
+  \newtheorem{#1}[theorem]{#2}}
+\makeatother
+\theoremstyle{plain}
+\redeclaretheorem{proposition}{Proposition}
+\redeclaretheorem{lemma}{Lemma}
+\redeclaretheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\redeclaretheorem{definition}{Definition}
+\redeclaretheorem{example}{Example}
+\redeclaretheorem{remark}{Remark}
+\theoremstyle{plain}
+
+%%% Multi-page exports (a whole chapter) join the pages with \include, which
+%%% puts a page break before every page and leaves the title alone on page 1.
+%%% Start the first page under the title and every later one on a new page.
+\newif\iffirstinclude
+\firstincludetrue
+\renewcommand{\include}[1]{%
+  \iffirstinclude\global\firstincludefalse\else\clearpage\fi
+  \input{#1}}
+
+% colors for hyperlinks
+\hypersetup{colorlinks=true, allcolors=blue}
+
+\title{[-doc.title-]}
+
+\author{[-doc.authors|join(" \\and ", "name")-]}
+
+\newdate{articleDate}{[-doc.date.day-]}{[-doc.date.month-]}{[-doc.date.year-]}
+\date{\displaydate{articleDate}}
+
+\begin{document}
+\maketitle
+[# if parts.abstract #]\begin{abstract}[-parts.abstract-]\end{abstract}[# endif #]
+
+[-CONTENT-]
+
+
+[# if doc.bibliography #]
+\bibliography{[- doc.bibliography | join(", ") -]}
+[# endif #]
+\end{document}
