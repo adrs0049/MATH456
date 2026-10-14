@@ -23,14 +23,15 @@ JTOKEN      ?= mysttoken
 JLOG        := /tmp/myst-jupyter-$(JPORT).log
 # Pages executed at once. mystmd defaults to one per core, which on a big
 # machine starves the slow figure cells (FitzHugh-Nagumo, saddle-node) until
-# they time out.
+# they time out. `myst start` has no such option; it reuses the execution
+# cache, so run `make build` first if `make start` shows timed-out figures.
 EXEC_PARALLEL ?= 8
 
 .PHONY: theme start build pdf pdf-page start-noexec build-noexec pdf-noexec pdf-page-noexec \
         build-exec pdf-exec pdf-page-exec jupyter-start jupyter-stop clean
 
 start:            ## live preview at http://localhost:$(PORT), code cells executed
-	@$(MAKE) --no-print-directory HOST=127.0.0.1 _exec MYST_CMD="start --port $(PORT) --server-port $(SERVER_PORT) --execute --execute-parallel $(EXEC_PARALLEL)"
+	@$(MAKE) --no-print-directory HOST=127.0.0.1 _exec MYST_CMD="start --port $(PORT) --server-port $(SERVER_PORT) --execute"
 
 build:            ## static HTML into _build/, code cells executed
 	@$(MAKE) --no-print-directory _exec MYST_CMD="build --html --execute --execute-parallel $(EXEC_PARALLEL)"
