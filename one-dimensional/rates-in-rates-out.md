@@ -265,6 +265,7 @@ finite time $t = 1/C_0$.
 
 :::{prf:remark} The loss must win
 :label: rem-ir-loss-wins
+:class: dropdown
 
 The trouble in {prf:ref}`ex-ir-artifacts` is that the gain, $C^2$, grows faster
 with $C$ than the loss does. For a model of the form

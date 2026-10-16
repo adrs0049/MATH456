@@ -25,7 +25,7 @@ smallest dose at which resistance persists, and near it the culture takes a
 long time to settle.
 :::
 
-## One model, many phase lines
+## The shared-good model at three doses
 
 Return to resistance as a shared good ({prf:ref}`def-pf-shared` in
 [](populations-and-fractions.md)):
@@ -37,24 +37,19 @@ $$ (eq-bf-shared)
 It has two parameters. The cost $c$ is set by the cell. The dose, through the
 kill rate $a = kD_0$, is set by us. The semicolon in $f(p; a)$ separates the
 variable $p$, which changes in time, from the parameter $a$, which we hold
-fixed during an experiment and change between experiments. Keep the cost
-$c = 0.1$/h of {prf:ref}`ex-pf-resistance` and turn the dose.
+fixed during an experiment and change between experiments. Hold the cost
+fixed and turn the dose. There are three cases, according to how the dose
+compares with the cost.
 
-:::{prf:example} Three doses
-:label: ex-bf-three-doses
-
-Take $c = 0.1$/h.
-
-- **$a = 0.05$/h, below the cost.** The bracket $(a - c) - ap$ is negative for
+- **Below the cost, $a < c$.** The bracket $(a - c) - ap$ is negative for
   every $p$ in $[0, 1]$, so $f < 0$ and every arrow points left. The formula
-  $p^\ast = 1 - c/a = -1$ is not a fraction. The resistant cells are lost: the
-  dose is too small to pay for the enzyme.
-- **$a = 0.1$/h, equal to the cost.** The bracket is $-ap$, and
+  $p^\ast = 1 - c/a$ gives a negative number, not a fraction. The resistant
+  cells are lost: the dose is too small to pay for the enzyme.
+- **At the cost, $a = c$.** The bracket is $-ap$, and
   $f(p) = -c\,p^2(1-p) < 0$ on $(0, 1)$. The arrows still point left, and
   $p = 0$ is still stable, but $f'(0) = 0$: the slope test says nothing.
-- **$a = 0.5$/h, above the cost.** This is {prf:ref}`ex-pf-shared`: a stable
-  mixture at $p^\ast = 0.8$, with both ends unstable.
-:::
+- **Above the cost, $a > c$.** As in {prf:ref}`ex-pf-shared`, a stable mixture
+  $p^\ast = 1 - c/a$ lies inside $(0, 1)$, and both ends are unstable.
 
 ```{code-cell} python
 :tags: [hide-input]
@@ -135,8 +130,9 @@ axs[0, 0].set_ylim(-0.025, 0.06)
 fig.tight_layout();
 ```
 
-The shared-good model {eq}`eq-bf-shared` with cost $c = 0.1$/h at three doses.
-Top: the right-hand side. Bottom: the phase line, with stable steady states
+The shared-good model {eq}`eq-bf-shared` at three doses, with cost
+$c = 0.1$/h as in {prf:ref}`ex-pf-resistance`; all figures on this page use
+this cost. Top: the right-hand side. Bottom: the phase line, with stable steady states
 filled and unstable ones open. Below the cost (left) resistance is lost. At the
 cost (middle) it is still lost, but the graph touches zero at $p = 0$ with zero
 slope. Above the cost (right) a stable mixture has appeared.
@@ -180,7 +176,7 @@ and unstable for $a > c$. $p^\ast$ is the other way round: unstable for
 $a < c$, where it is negative and not a fraction, and stable for $a > c$. Both
 change at $a = c$, which is exactly where $p^\ast$ passes through $0$.
 
-### The same branch, read from the other side
+### The break-even dose
 
 We found $p^\ast$ by solving the bracket for the fraction. Solve it for the
 dose instead: the bracket $(a - c) - ap = a(1-p) - c$ vanishes when
@@ -196,6 +192,7 @@ must be for resistance still to pay.
 
 :::{prf:remark} The graphical method
 :label: rem-bf-graphical
+:class: dropdown
 
 Factoring $1 - p$ out of the bracket,
 
@@ -358,29 +355,12 @@ approximation uses $a \approx c$ in the denominator.
 This is called a **transcritical** bifurcation: two branches of steady states
 cross at the critical value, and each passes its stability to the other.
 
-:::{prf:remark} The normal form
-:label: rem-bf-transcritical-normal
-
-Multiply out: $f(p; a) = (a - c)\,p - (2a - c)\,p^2 + a\,p^3$. Near $p = 0$
-the cubic term is small compared with the others, and near $a = c$ the
-coefficient $2a - c$ is close to $c$. With $\mu = a - c$,
-
-$$
-\dot p \approx \mu\,p - c\,p^2 ,
-$$
-
-and in the variable $x = c\,p$ this is $\dot x = \mu x - x^2$. Strogatz calls
-this the **normal form** of the transcritical bifurcation
-{cite:p}`strogatz2015`: near its bifurcation value, every transcritical
-bifurcation looks like this one after a change of variables.
-:::
-
 As biology: below $a = c$, the drug kills sensitive cells more slowly than the
 enzyme slows resistant ones, and resistance is lost from any mixture. Above
 $a = c$, resistance persists, at a level that starts at zero and rises with the
 dose. At no dose do the sensitive cells vanish.
 
-### Sharing turns a jump into a smooth rise
+### Without sharing
 
 Without sharing, for example when resistant cells pump the drug out of
 themselves without lowering the level in the culture, the difference of rates
@@ -398,7 +378,7 @@ state crosses $(0, 1)$ over the window of doses $c < a < c/(1 - \ve)$, which
 shrinks to a point as $\ve \to 0$.
 :::
 
-### How little drug selects for resistance
+### Resistance at low doses
 
 :::{note} Biology background: the MIC
 The **minimum inhibitory concentration** (MIC) of an antibiotic is the
@@ -407,11 +387,11 @@ above it. In our model sensitive cells grow at $r - a$, so the MIC is the dose
 with $a = r$.
 :::
 
-With the numbers of {prf:ref}`ex-pf-resistance`, $r = 2$/h and $c = 0.1$/h.
-Resistance persists above $a = c$, a twentieth of the MIC. Doses far too small
-to treat anything still keep resistant cells in the population. The threshold
-$a = c$ is the same with or without sharing; sharing decides only what happens
-above it. Gullberg and colleagues competed resistant and sensitive bacteria at
+Resistance persists above $a = c$. The cost of resistance is small compared
+with the growth rate, $c \ll r$, so this threshold lies far below the MIC:
+doses too small to treat anything still keep resistant cells in the
+population. The threshold $a = c$ is the same with or without sharing; sharing
+decides only what happens above it. Gullberg and colleagues competed resistant and sensitive bacteria at
 very low drug concentrations and found that resistant cells were enriched at
 concentrations up to several hundred times below the MIC
 {cite:p}`gullberg2011`.
@@ -426,8 +406,7 @@ $$ (eq-bf-at-critical)
 
 The phase line says $p = 0$ is stable, but the decay is slow: separating
 variables in $\dot p = -c\,p^2$ gives $p(t) = p_0/(1 + c\,p_0\,t)$, a power of
-$t$ instead of an exponential. The same equation returns, for a human gene, in
-[](sickle-cell-without-malaria.md).
+$t$ instead of an exponential.
 
 Near the bifurcation value the approach is exponential again, but slow. The
 time scale is $1/|f'|$ at the stable steady state, from {eq}`eq-bf-slopes`:
@@ -439,12 +418,9 @@ $$
 
 and both grow without bound as $a \to c$.
 
-| Dose $a$ (1/h) | $0.05$ | $0.09$ | $0.11$ | $0.5$ | $3$ |
-|---|---|---|---|---|---|
-| time scale (h) | $20$ | $100$ | $110$ | $12.5$ | $10.3$ |
-
 :::{prf:remark} Critical slowing down
 :label: rem-bf-critical-slowing
+:class: dropdown
 
 Near a bifurcation the system takes a long time to settle, because the arrows
 on the phase line near the steady state are short. This is **critical slowing

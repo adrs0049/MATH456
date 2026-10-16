@@ -12,11 +12,121 @@ downloads:
 # Nondimensionalization
 
 :::{tip} Big Idea
-Measure every variable in a unit taken from the problem instead of in seconds
-and metres. If the units are well chosen, every rescaled variable is of order
-one, and all the information about how big a term is moves into the constant
-in front of it. Four constants collapse into one number, $\ve = \tau_i/T$, and
-it stands in front of the inertial term.
+In [](../modeling/why-inertia-is-irrelevant.md) inertia looked negligible
+because $\tau_i/T \approx 10^{-9}$, a comparison of two numbers made outside
+the equation. To delete the inertial term and ask how much error that commits,
+the ratio has to be inside the equation. Measure every variable in a unit taken from the problem
+instead of in seconds and metres. If the units are well chosen, every rescaled
+variable is of order one, and all the information about how big a term is
+moves into the constant in front of it. Four constants collapse into one
+number, $\ve = \tau_i/T$, and it stands in front of the inertial term.
+:::
+
+## The question
+
+[](../modeling/why-inertia-is-irrelevant.md) ended with an observation:
+except for a few microseconds after each change in force, a cell's velocity is
+$v \approx F/\gamma$. Turning that into an equation of motion means deleting
+the term $m\ddot{\mathbf x}$ from Newton's second law, which leaves the
+overdamped force balance $\gamma\dot{\mathbf x} = \mathbf F$. The reduced
+equation cannot be exactly right: a cell that loses its traction while moving
+glides to a stop under Newton's law, but stops dead under the force balance.
+So the question of this part is:
+
+> How much error do we make by using the overdamped equation in place of
+> Newton's law?
+
+The first step is to put the equation in a form where "small" means something.
+
+## The equation
+
+In one dimension, with $F$ the net force the cell generates for itself, Newton's
+second law with Stokes drag {eq}`eq-stokes-drag` is the following.
+
+:::{prf:definition} Equation of motion
+:label: def-eom
+
+$$
+m\,\ddot x = F(t) - \gamma\,\dot x
+\qquad\Longleftrightarrow\qquad
+m\,\dot v = F(t) - \gamma\,v, \quad v = \dot x .
+$$ (eq-eom-full)
+
+Second order in $x$, so it needs $x(0)$ **and** $\dot x(0)$. Since $x$ does
+not appear on the right it is first order in $v$, and $x$ follows by one more
+integration.
+:::
+
+We work with the equation for the velocity,
+
+$$
+m\,\frac{\dd v}{\dd t} = F(t) - \gamma\,v ,
+\qquad v(0) = v_0 .
+$$ (eq-eom-v)
+
+No value of $F$ is needed anywhere in this part: the whole argument is about
+time scales.
+
+## Units
+
+| Symbol | Meaning | SI units | At cell scale |
+|---|---|---|---|
+| $t$ | time | $\mathrm{s}$ | s, min |
+| $x$ | position | $\mathrm{m}$ | $\mu$m |
+| $v = \dot x$ | velocity | $\mathrm{m\,s^{-1}}$ | $\mu$m/min |
+| $a = \ddot x$ | acceleration | $\mathrm{m\,s^{-2}}$ | never measured |
+| $m$ | mass | $\mathrm{kg}$ | pg |
+| $F$ | force | $\mathrm{N} = \mathrm{kg\,m\,s^{-2}}$ | pN |
+| $\gamma$ | drag coefficient | $\mathrm{N\,s\,m^{-1}} = \mathrm{kg\,s^{-1}}$ | pN s $\mu\mathrm{m}^{-1}$ |
+| $\eta$ | viscosity | $\mathrm{Pa\,s} = \mathrm{kg\,m^{-1}s^{-1}}$ | water: $10^{-3}$ |
+
+Every term of {eq}`eq-eom-full` is a force:
+
+$$
+\underbrace{\mathrm{kg}\cdot\mathrm{m\,s^{-2}}}_{m\ddot x}
+\;=\;
+\underbrace{\mathrm{N}}_{F}
+\;=\;
+\underbrace{\mathrm{kg\,s^{-1}}\cdot\mathrm{m\,s^{-1}}}_{\gamma\dot x}
+\;=\; \mathrm{kg\,m\,s^{-2}} . \qquad\checkmark
+$$ (eq-dimensional-check)
+
+Both spellings of the units of $\gamma$ are useful. As $\mathrm{N\,s\,m^{-1}}$
+it is a force per unit velocity, which is what $\gamma v = F$ says; as
+$\mathrm{kg\,s^{-1}}$ the kilograms cancel against $m$ and leave seconds.
+
+Nothing in the equation is a time except $t$ itself. The units say which
+combinations of the constants, and of the cell's own length $L$ and speed
+$v_0$, are times.
+
+:::{prf:example} Which combinations are times
+:label: ex-combinations-are-times
+:class: dropdown
+
+**From the equation.** The only combination of $m$ and $\gamma$ with units of
+time is
+
+$$
+\frac{m}{\gamma}
+= \frac{\mathrm{kg}}{\mathrm{kg\,s^{-1}}}
+= \mathrm{s} ,
+$$
+
+the inertial stopping time $\tau_i$ of {prf:ref}`def-tau-i`.
+
+**From the biology.** A length the cell has and a speed at which it moves give
+
+$$
+\frac{L}{v_0}
+= \frac{\mathrm{m}}{\mathrm{m\,s^{-1}}}
+= \mathrm{s} ,
+$$
+
+the migration time $T$ of {prf:ref}`def-migration-time`.
+
+These are the two times compared in
+[](../modeling/why-inertia-is-irrelevant.md), and the units alone would have
+found them before anything was solved.
 :::
 
 ## Reference units
@@ -162,6 +272,7 @@ $$ (eq-epsilon-number)
 
 :::{prf:remark} What the scaling bought
 :label: rmk-scaling-bought
+:class: dropdown
 
 Before scaling, "inertia is negligible" was a comparison between two numbers
 carried around outside the model. After scaling it is a statement about the

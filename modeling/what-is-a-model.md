@@ -16,11 +16,10 @@ A model is a simplification built for a question, made precise enough to
 settle that question true or false, or precise enough to show what could work.
 Change the question and you change the model. Every model has a domain of
 validity, and knowing where it breaks is as much a result as anything it
-predicts. This page ends by buying one simplification, dropping inertia from
-the motion of a cell, and computing exactly what it costs.
+predicts.
 :::
 
-## What a model is
+## What is a model?
 
 Ask how a crawling cell, with no brain, no eyes, and no map, finds its way
 around a corner, and the answers come quickly: it follows a chemical signal, it
@@ -228,133 +227,7 @@ Each of these models has few symbols. A model earns its keep by being small
 enough to reason about, and every one of them is a deliberate simplification
 with a domain of validity.
 
-## Doing some modeling: why inertia is irrelevant
-
-The rest of this page makes one simplification and checks it. The six steps
-below are not specific to cells; they are the moves of almost every modeling
-argument.
-
-### 1. Sharpen the question
-
-How a cell gets around a corner cannot be attacked yet, because before asking
-how a cell *steers* we have to know what sets its motion at all. So the
-question is the one underneath:
-
-> If the cell changes how hard it is pulling, how long until it reaches its new
-> speed?
-
-### 2. Start from something trusted
-
-Newton's second law for the cell center, with an active force, a contact
-force, and viscous drag:
-
-$$
-m\ddot{\mathbf x} = \mathbf F_\mathrm{active} + \mathbf F_\mathrm{contact} -
-    \gamma\dot{\mathbf x}.
-$$ (eq-newton-cell)
-
-### 3. Estimate every term before solving
-
-A cell is mostly water, so $m \approx 10^{-12}$ kg for a $10\ \mu$m cell, and
-Stokes drag on a sphere of radius $5\ \mu$m in a medium ten times as viscous as
-water gives $\gamma \approx 10^{-6}$ kg/s ([](scales-and-forces.md)). These
-combine into the stopping time
-
-$$
-\tau_i = \frac{m}{\gamma} \approx 10^{-6}\ \mathrm{s}.
-$$ (eq-tau-inertia)
-
-### 4. Find the small parameter
-
-The answer to the question of step 1 is a microsecond. The time scale on which
-we observe cells is the time to move one body length, $\tau_\mig \approx 20$
-min, so
-
-$$
-\frac{\tau_i}{\tau_\mig} \sim 10^{-9}.
-$$
-
-That ratio is the whole result. Most modeling insight is scale separation in
-disguise, and finding the small parameter is the first step of reducing a
-model.
-
-### 5. Take the limit, and check what it cost
-
-The full equation is linear, so it can be solved exactly and compared with the
-reduced one. Hold the force $F$ constant over the window of interest. That is
-itself a modeling claim: protrusion forces change over seconds, and the window
-is microseconds.
-
-:::{prf:example} What dropping inertia actually costs
-:label: ex-inertia-cost
-
-Write {eq}`eq-newton-cell` in one dimension for the speed $v = \dot x$ with $F$
-constant and $v(0) = 0$. The full equation $m\dot v = F - \gamma v$ is linear
-with integrating factor $e^{t/\tau_i}$ ([](../overdamped/integrating-factor.md)),
-giving
-
-$$
-v(t) = \frac{F}{\gamma}\left(1 - e^{-t/\tau_i}\right),
-\qquad
-v_\mathrm{od} = \frac{F}{\gamma},
-$$ (eq-v-both)
-
-where $v_\mathrm{od}$ is what survives when the term $m\dot v$ is deleted. Both
-settle to the same terminal speed
-
-$$
-u_0 := \frac{F}{\gamma},
-$$ (eq-u0)
-
-the migration speed of [](scales-and-forces.md). The overdamped model reaches
-it at once and the full model approaches it, so the two differ by
-$u_0 e^{-t/\tau_i}$, which decays on the stopping time. Integrating once more,
-
-$$
-x(t) = \frac{F}{\gamma}\Big[\,t - \tau_i\big(1 - e^{-t/\tau_i}\big)\Big],
-\qquad
-x_\mathrm{od}(t) = \frac{F}{\gamma}\,t ,
-$$ (eq-x-both)
-
-so the position error does not grow. It saturates:
-
-$$
-x_\mathrm{od}(t) - x(t)\;\longrightarrow\;\frac{F}{\gamma}\,\tau_i = u_0\,\tau_i .
-$$ (eq-lag)
-:::
-
-With $u_0 \approx 0.6\ \mu$m/min $\approx 10^{-8}$ m/s and
-$\tau_i \approx 10^{-6}$ s, {eq}`eq-lag` gives
-
-$$
-u_0\,\tau_i \approx 10^{-14}\ \mathrm{m}.
-$$
-
-That is the *entire* error committed by dropping inertia, over all time, and
-it is about $10^{-4}$ of the diameter of a hydrogen atom. At $t = 1$ s, the
-first frame of a movie, the relative error in the velocity is $e^{-10^{6}}$.
-The error also saturates instead of accumulating, so the approximation is no
-worse on an hour-long track than on a one-second one. Not every reduction has
-that property. The Reynolds number $\mathrm{Re}\approx10^{-8}$ of
-{prf:ref}`ex-reynolds` reaches the same conclusion from the fluid side.
-
-So we drop the term. Setting $m\ddot{\mathbf x}\approx 0$ leaves the
-overdamped force balance
-
-$$
-\gamma\,\dot{\mathbf x} = \mathbf F .
-$$ (eq-overdamped)
-
-Inertia is not absent; we never look closely enough to see it. On any time
-scale long compared with $\tau_i$, the velocity has already relaxed to $u_0$
-before the first observation. For a cell that means anything slower than a
-microsecond. Every model carries a validity condition like this, stated or
-not. The argument is redone carefully, as a singular limit with an error
-estimate, in [](../overdamped/index.md).
-
-### 6. Read off the commitments, and check them
-
-Force sets velocity, not acceleration. There is no coasting and no momentum: a
-cell that stops pulling stops at once, and zero net force means exactly zero
-velocity, not slowing down. This matches what is known: a cell whose motors are
-disrupted stops essentially instantly, and nobody has filmed a cell coasting.
+The next page, [](why-inertia-is-irrelevant.md), sets up the first such
+simplification, dropping inertia from the motion of a cell, by computing how
+far a cell coasts; [](../overdamped/index.md) makes it and computes exactly
+what it costs.

@@ -2,17 +2,17 @@
 exports:
   - format: pdf
     template: ./_templates/plain_narrow
-    output: exports/force-sets-velocity.pdf
-    id: overdamped-force-sets-velocity-pdf
+    output: exports/error-analysis.pdf
+    id: overdamped-error-analysis-pdf
 downloads:
-  - id: overdamped-force-sets-velocity-pdf
+  - id: overdamped-error-analysis-pdf
     title: Download PDF
 kernelspec:
   name: python3
   display_name: Python 3
 ---
 
-# Force Sets Velocity
+# Error Analysis
 
 :::{tip} Big Idea
 The outer solution differs from the exact one only during the first
@@ -141,6 +141,7 @@ its traction while moving at $v_0$.
 
 :::{prf:remark} One transient, two numbers
 :label: rmk-one-transient
+:class: dropdown
 
 Everything the reduction discards is the term
 $(v_0 - F/\gamma)e^{-t/\tau_i}$ in the velocity. It has height
@@ -161,6 +162,7 @@ first among them, sees only the area.
 
 :::{prf:example} What the reduction throws away
 :label: ex-coasting-distance
+:class: dropdown
 
 A cell moving at $v_0$ loses all traction at $t = 0$, so $F = 0$ and
 $|\tilde v_0 - \tilde F| = 1$, the largest value it can take. The distance the
@@ -286,6 +288,7 @@ curve is $\ve$.
 
 :::{prf:example} The windows a cell experiment works with
 :label: ex-measured-velocity
+:class: dropdown
 
 What an experiment fixes is which $\Delta t$ is in play: positions recorded one
 frame apart give $\bar v_{\Delta t}$ at that $\Delta t$, and $\dot x$ itself is

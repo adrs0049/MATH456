@@ -397,6 +397,7 @@ over. Biologists call the sensitive cells **cheaters**.
 
 :::{prf:remark} Changing the dose
 :label: rem-pf-dose
+:class: dropdown
 
 With no drug, $a = 0$, {eq}`eq-pf-shared` is $\dot p = -c\,p(1-p)$, the
 constant-rate model of {prf:ref}`ex-pf-resistance`. Doubling the dose doubles
@@ -452,28 +453,4 @@ all settle at $p^\ast = 0.8$ (dashed) within about two days.
 
 The shape of {eq}`eq-pf-shared` recurs: $p(1-p)$ times a bracket that is
 positive at $p = 0$, negative at $p = 1$, and falls in between.
-[](transcritical.md) turns the dose and watches $p^\ast$ appear, and
-[](sickle-cell.md) finds the same shape for a human gene.
-
-## A puzzle
-
-:::{note} Biology background: genes and alleles
-A **gene** is the instruction for making one protein. A gene can come in
-different versions, called **alleles**. Hemoglobin, the protein that carries
-oxygen in red blood cells, has a normal allele, $A$, and a **sickle allele**,
-$S$. People who inherit $S$ from both parents have **sickle-cell anemia**: their
-red blood cells deform into a sickle shape and block small blood vessels.
-Without modern treatment, most of them die in childhood.
-:::
-
-Treat the gene copies as a population, like the bacteria. Copies of $S$ that
-sit in people with sickle-cell anemia are lost in almost every generation.
-Copies of $A$ are not. By {prf:ref}`cor-pf-takeover`, the fraction of $S$
-should fall to zero. Yet in parts of sub-Saharan Africa $20$ to $30\%$ of
-people carry one copy of $S$, and that fraction has been stable for a very long
-time.
-
-The flaw is the assumption that a copy of $S$ grows at a fixed rate:
-[](sickle-cell.md) shows that because people carry **two** copies of each gene,
-the rate of an $S$ copy depends on how common $S$ is, just as the advantage of
-the resistant bacteria above depended on their fraction.
+[](transcritical.md) turns the dose and watches $p^\ast$ appear.

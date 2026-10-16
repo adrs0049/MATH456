@@ -10,11 +10,10 @@ exports:
     id: overdamped-part-pdf
     title: "From Newton's Second Law to a Force Balance"
     articles:
-      - newton-with-drag.md
       - scaling-the-equation.md
       - singular-limit.md
-      - force-sets-velocity.md
       - integrating-factor.md
+      - error-analysis.md
 downloads:
   - id: overdamped-part-pdf
     title: Download the part (PDF)
@@ -25,30 +24,22 @@ downloads:
 # From Newton's Second Law to a Force Balance
 
 :::{tip} Big Idea
-Newton's second law is a statement about acceleration, and for a cell it is
-the wrong equation. Solving it with the forcing switched off produces a time,
-$\tau_i = m/\gamma$, a microsecond. Measuring time in units of the behavior we
-want to predict puts a dimensionless number $\ve = \tau_i/T \approx 10^{-9}$ in
-front of the inertial term, and setting $\ve = 0$ gives $\gamma\,\dot x = F$.
-The limit lowers the order of the equation and discards an initial condition,
-and the point of this part is to see what the reduction throws away and to
-compute its error in the quantity we actually measure.
+[](../modeling/why-inertia-is-irrelevant.md) found that a cell's velocity is
+$F/\gamma$ except for a few microseconds after each change in force, because
+the inertial stopping time $\tau_i = m/\gamma$ is $10^{-9}$ of the time the
+cell takes to move its own length. This part turns that observation into the
+force balance $\gamma\,\dot x = F$. Measuring time in units of the behavior
+we want to predict puts that ratio, $\ve = \tau_i/T$, in front of the
+inertial term, and setting $\ve = 0$ gives the force balance. The limit
+lowers the order of the equation and discards an initial condition, and the
+point of this part is to see what the reduction throws away and to compute its
+error in the quantity we actually measure.
 :::
 
 ## The question
 
-A swimmer who stops stroking glides a body length or two. How far does a cell
-glide after its traction is switched off? The answer
-({prf:ref}`ex-coasting-distance`) takes four pages, and each uses a technique
-that recurs in every later model.
-
-1. [](newton-with-drag.md): the equation of motion with every term present,
-   its units, and the two times hidden in its constants.
-2. [](scaling-the-equation.md): reference units, the substitution, and the
-   single parameter $\ve$ the four constants collapse into.
-3. [](singular-limit.md): what setting $\ve = 0$ loses, the two time scales,
-   inner and outer solutions, and matching.
-4. [](force-sets-velocity.md): the error of the reduction in the observable,
-   the overdamped force balance, and what it says about the physics.
-
-The one solution method used throughout is in [](integrating-factor.md).
+How much error do we make by using the overdamped equation in place of
+Newton's law? The sharpest test is a cell whose traction is switched off. A
+swimmer who stops stroking glides a body length or two; the overdamped
+equation says the cell stops dead. How far does it really glide? This part
+answers that in {prf:ref}`ex-coasting-distance`.

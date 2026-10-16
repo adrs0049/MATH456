@@ -89,6 +89,9 @@ jupyter-stop:     ## stop the throwaway Jupyter server
 theme:            ## build the myst-theme submodule into _theme/ (once, and after updating it)
 	cd myst-theme && npm ci && npm run build
 	cd myst-theme/themes/book && rm -rf public build && npm run prod:build
+	# prod:build leaves out the thebe assets that render HTML outputs (the
+	# epsilon slider in overdamped/singular-limit.md); only `dev` copies them.
+	cd myst-theme/themes/book && npm run build:thebe
 	rm -rf _theme && mkdir -p _theme
 	cp -r myst-theme/themes/book/public myst-theme/themes/book/build \
 	      myst-theme/themes/book/template.yml myst-theme/template/package.json \

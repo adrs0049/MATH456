@@ -23,7 +23,7 @@ full. One equation, one solution, two time scales, and a rule (matching) for
 joining the two descriptions.
 :::
 
-## Set $\ve = 0$
+## What setting $\ve = 0$ loses
 
 The full problem is an initial value problem, one first-order equation and one
 condition to fix the one constant it produces:
@@ -70,21 +70,22 @@ $10^{-9}$, so it can only be wrong on a set small enough that nine orders of
 magnitude went unnoticed. Where that set is, and how small, follows from the
 two time scales in the equation.
 
-## Two time scales
+## Outer and inner problems
 
-$\ve = \tau_i/T$ is a ratio of two times. $\tau_i = m/\gamma$ belongs to the
-cell; $T = L/v_0$ belongs to the question, and writing the equation in units of
-$T$, as in {eq}`eq-ivp`, is what compressed the layer to a point. Measuring
-time instead in the cell's own unit, $\sigma = t/\tau_i = \tilde t/\ve$, the
-chain rule gives $\dd/\dd\tilde t = \ve^{-1}\,\dd/\dd\sigma$, and {eq}`eq-ivp`
-becomes
+$\ve = \tau_i/T$ is a ratio of two times, and each gives a unit in which to
+measure time. $T = L/v_0$ belongs to the question, and writing the equation of
+motion in units of $T$, as in {eq}`eq-ivp`, is what compressed the layer to a
+point. $\tau_i = m/\gamma$ belongs to the cell. Measuring time in the cell's
+own unit, $\sigma = t/\tau_i = \tilde t/\ve$, the chain rule gives
+$\dd/\dd\tilde t = \ve^{-1}\,\dd/\dd\sigma$, and {eq}`eq-ivp` becomes
 
 $$
-\frac{\dd\tilde v}{\dd\sigma} = \tilde F - \tilde v,
+\frac{\dd\tilde v}{\dd\sigma} = \tilde F(\ve\sigma) - \tilde v,
 \qquad \tilde v(0) = \tilde v_0 ,
 $$ (eq-inner-equation)
 
-with no $\ve$ in it. This is the unit the equation picks for itself.
+with no $\ve$ in front of the derivative. This is the unit the equation picks
+for itself.
 
 {eq}`eq-ivp` and {eq}`eq-inner-equation` are the same equation in two units of
 time, and they differ only in what they resolve. On $\sigma$ the transient
@@ -96,64 +97,133 @@ does.
 
 ```{code-cell} python
 :tags: [hide-input]
+# The same solution on the two axes, with epsilon as a dial. Each frame is one
+# value of epsilon; the slider below the picture selects it.
+import base64, io
 import numpy as np
 import matplotlib.pyplot as plt
+from IPython.display import display
 plt.rcParams.update({"figure.dpi": 130, "font.size": 9, "axes.spines.top": False,
                      "axes.spines.right": False})
 C_EXACT, C_OUTER, C_INNER, C_COMP, C_LAYER = "#111111", "#0072B2", "#D55E00", "#009E73", "#F0C808"
 V0, FBAR = 0.0, 1.0            # start at rest; force balance value F/gamma = 1
 
-EPS = 0.005                      # exaggerated tau_i / T; a real cell has 1e-9
-fig, ax = plt.subplots(1, 2, figsize=(6.6, 2.5))
-sig = np.linspace(0, 6, 600)
-ax[0].plot(sig, FBAR + (V0 - FBAR) * np.exp(-sig), color=C_EXACT, lw=1.8)
-ax[0].axhline(FBAR, color=C_OUTER, ls="--", lw=1.4)
-ax[0].set_xlabel(r"time of the cell  $\sigma = t/\tau_i$"); ax[0].set_ylabel(r"$\tilde v$")
-ax[0].set_title("the layer, resolved"); ax[0].set_ylim(-0.08, 1.18)
-ax[0].annotate("inner problem\n" + r"$d\tilde v/d\sigma = \tilde F - \tilde v$",
-               xy=(2.2, 0.55), fontsize=8, color=C_EXACT)
-ax[0].annotate(r"$\tilde v = \tilde F$", xy=(4.6, 1.05), fontsize=8, color=C_OUTER)
-t = np.linspace(0, 1, 20000)
-ax[1].plot(t, FBAR + (V0 - FBAR) * np.exp(-t / EPS), color=C_EXACT, lw=1.8, label="exact")
-ax[1].axhline(FBAR, color=C_OUTER, ls="--", lw=1.4, label=r"outer, $\tilde v = \tilde F$")
-ax[1].axvspan(0, EPS, color=C_LAYER, alpha=0.9, lw=0)
-ax[1].set_xlabel(r"time of the question  $\tilde t = t/T$")
-ax[1].set_title("the layer is invisible"); ax[1].set_ylim(-0.08, 1.18)
-ax[1].annotate("the whole of the left panel\nis this yellow sliver", xy=(EPS, 0.5),
-               xytext=(0.22, 0.38), fontsize=8, color="#8a6d00",
-               arrowprops=dict(arrowstyle="->", color="#8a6d00", lw=1.0))
-ax[1].legend(loc="lower right", frameon=False)
-fig.tight_layout();
+def frame_png(eps):
+    fig, ax = plt.subplots(1, 2, figsize=(6.6, 2.5))
+    sig = np.linspace(0, 6, 600)
+    ax[0].plot(sig, FBAR + (V0 - FBAR) * np.exp(-sig), color=C_EXACT, lw=1.8)
+    ax[0].axhline(FBAR, color=C_OUTER, ls="--", lw=1.2)
+    ax[0].set_xlabel(r"time of the cell  $\sigma = t/\tau_i = \tilde t/\varepsilon$")
+    ax[0].set_ylabel(r"$\tilde v$")
+    ax[0].set_title("the same solution: nothing moves")
+    ax[0].set_xlim(0, 6); ax[0].set_ylim(-0.08, 1.18)
+    t = np.linspace(0, 1, 4000)
+    ax[1].plot(t, FBAR + (V0 - FBAR) * np.exp(-t / eps), color=C_EXACT, lw=1.8)
+    ax[1].axhline(FBAR, color=C_OUTER, ls="--", lw=1.2)
+    ax[1].axvspan(0, eps, color=C_LAYER, alpha=0.9, lw=0)
+    ax[1].set_xlabel(r"time of the question  $\tilde t = t/T$")
+    ax[1].set_title(rf"$\varepsilon = {eps:.3g}$: the layer is $\varepsilon$ wide")
+    ax[1].set_xlim(0, 1); ax[1].set_ylim(-0.08, 1.18)
+    fig.tight_layout()
+    buf = io.BytesIO(); fig.savefig(buf, format="png", dpi=100); plt.close(fig)
+    return base64.b64encode(buf.getvalue()).decode()
+
+eps_values = np.logspace(0, -3, 25)
+frames = [frame_png(e) for e in eps_values]
+labels = [f"{e:.3g}" for e in eps_values]
+k0 = int(np.argmin(np.abs(np.log10(eps_values) + 1)))   # open at epsilon = 0.1
+page = f"""<!doctype html><html><body style="margin:0;font:13px sans-serif;text-align:center">
+<img id="f" src="data:image/png;base64,{frames[k0]}" style="max-width:100%">
+<div><label>&#949; = <b id="l">{labels[k0]}</b></label>
+<input id="s" type="range" min="0" max="{len(frames)-1}" value="{k0}" style="width:60%"></div>
+<script>
+var F={frames!r}, L={labels!r};
+document.getElementById("s").oninput=function(){{
+  document.getElementById("f").src="data:image/png;base64,"+F[this.value];
+  document.getElementById("l").textContent=L[this.value];}};
+</script></body></html>"""
+esc = page.replace("&", "&amp;").replace('"', "&quot;")
+display({"text/html": f'<iframe srcdoc="{esc}" sandbox="allow-scripts" width="100%" '
+                       'height="330" style="border:0"></iframe>'}, raw=True)
 ```
 
-One solution on two time axes, starting from rest with $\tilde F = 1$ and an
-exaggerated $\ve = 0.005$. **Left:** on the cell's time $\sigma$ the transient
-fills the frame. **Right:** on the time of the question $\tilde t$ the same
-curve is a jump at the origin followed by the outer solution
-$\tilde v = \tilde F$; the whole left panel lives inside the yellow sliver of
-width $\ve$. For a real cell the sliver is a million times thinner than for
-$\ve = 10^{-3}$.
+One solution, starting from rest with $\tilde F = 1$, on the two time axes.
+**Left:** on the cell's time $\sigma$ the transient fills the frame, and does
+not change with $\ve$. **Right:** on the time of the question $\tilde t$ the
+same curve is squeezed into the yellow sliver of width $\ve$ at the origin.
+The slider (in the web version of these notes) starts at $\ve = 0.1$ and runs
+from $1$ to $10^{-3}$: the limit $\ve \to 0$ is the sliver closing. A cell's
+$\ve$ is a million times smaller than $10^{-3}$.
 
-Neither view is wrong; each answers a different question. Ours is where the
+Letting $\ve \to 0$ in each of the two units of time gives a different, and
+simpler, problem.
+
+:::{prf:definition} Outer and inner problems
+:label: def-outer-inner
+
+Let a problem with a small parameter $\ve$ have a thin initial layer.
+
+- The **outer problem** is the problem written in the slow unit of time, the
+  time of the question, with $\ve = 0$. Its solution, the **outer solution**
+  $u_\mathrm{out}$, has no free constant, follows the forcing, and is valid for
+  times long compared with the layer.
+- The **inner problem** is the problem written in the fast unit of time, the
+  thickness of the layer, with $\ve = 0$. Its solution, the **inner solution**
+  $u_\mathrm{in}$, keeps the order of the equation, carries the initial
+  condition, and is valid inside the layer.
+:::
+
+For the cell the two problems are as follows.
+
+**On the time of the question.** The outer problem is the reduced equation
+{eq}`eq-outer`, so
+
+$$
+\tilde v_\mathrm{out}(\tilde t) = \tilde F(\tilde t) .
+$$ (eq-cell-outer)
+
+It follows the force instantaneously, and it meets the initial condition only
+if $\tilde v_0 = \tilde F(0)$.
+
+**On the time of the cell.** In {eq}`eq-inner-equation` the force is
+$\tilde F(\ve\sigma) \to \tilde F(0)$ as $\ve \to 0$: over a few $\tau_i$ the
+force has no time to change. The inner problem and its solution are
+
+$$
+\frac{\dd\tilde v}{\dd\sigma} = \tilde F(0) - \tilde v,
+\quad \tilde v(0) = \tilde v_0
+\qquad\Longrightarrow\qquad
+\tilde v_\mathrm{in}(\sigma)
+= \tilde F(0) + \bigl(\tilde v_0 - \tilde F(0)\bigr)\,e^{-\sigma} .
+$$ (eq-cell-inner)
+
+It carries the initial condition, but knows only the initial value of the
+force.
+
+Neither problem is wrong; each answers a different question. Ours is where the
 cell is after a body length, and on that time scale $\tilde v = \tilde F$ from
 the start. Whether the ignored microsecond matters for that question is settled
-in [](force-sets-velocity.md).
+in [](error-analysis.md).
 
-## Inner and outer solutions
+## Checking against the exact solution
 
-The equation is linear, so it can be solved exactly and every approximation
-checked against the exact solution. For constant $\tilde F$,
+For constant $\tilde F$ the full problem can be solved exactly, so both
+reductions can be checked against it. By the integrating factor
+({prf:ref}`prop-integrating-factor`; the steps are in
+[](integrating-factor.md)),
 
 $$
 \tilde v(\tilde t) = \tilde F + C\,e^{-\tilde t/\ve},
 \qquad
-C = \tilde v_0 - \tilde F \ \text{ fixed by the initial condition,}
+C = \tilde v_0 - \tilde F \ \text{ fixed by the initial condition.}
 $$ (eq-general-solution)
 
-by the integrating factor ({prf:ref}`prop-integrating-factor`; the steps are in
-[](integrating-factor.md)). Letting $\ve \to 0$ with $\tilde t > 0$ fixed,
-$e^{-\tilde t/\ve} \to 0$, so the second term disappears and with it every
-trace of $C$.
+Letting $\ve \to 0$ with $\tilde t > 0$ fixed, $e^{-\tilde t/\ve} \to 0$ and
+the limit is the outer solution {eq}`eq-cell-outer`. Letting $\ve \to 0$ with
+$\sigma = \tilde t/\ve$ fixed, the exponential is $e^{-\sigma}$ and the limit
+is the inner solution {eq}`eq-cell-inner`. The outer and inner solutions are
+the two limits of one solution, depending on which unit of time is held fixed
+while $\ve$ shrinks.
 
 ```{code-cell} python
 :tags: [hide-input]
@@ -180,6 +250,7 @@ fixed $\tilde t > 0$ it tends to $0$ as $\ve \to 0$.
 
 :::{prf:remark} The constant did not vanish; its carrier did
 :label: rmk-carrier
+:class: dropdown
 
 Nothing removed $C$ from the problem. What the limit removed is the function it
 multiplies: $e^{-\tilde t/\ve} \to 0$ for every $\tilde t > 0$, so $C$
@@ -189,61 +260,11 @@ into a window of width $\ve$, which the time scale of the question cannot
 resolve and the cell's time scale $\sigma$ resolves in full.
 :::
 
-The exact solution therefore has two different limits as $\ve \to 0$,
-depending on what is held fixed while $\ve$ shrinks.
-
-:::{prf:definition} Outer solution
-:label: def-outer
-
-Let a problem with a small parameter $\ve$ have a thin initial layer. Its
-**outer solution** $u_\mathrm{out}$ is obtained by setting $\ve = 0$ in the
-equation written on the time scale of the question. It has no free constant,
-follows the forcing, and is valid for times long compared with the layer.
-:::
-
-:::{prf:example} The outer solution
-:label: ex-outer-solution
-
-Setting $\ve = 0$ in {eq}`eq-ivp` leaves $0 = \tilde F - \tilde v$, so
-
-$$
-\tilde v_\mathrm{out}(\tilde t) = \tilde F .
-$$ (eq-toy-outer)
-
-There is no free constant, and $\tilde v_\mathrm{out}(0) = \tilde v_0$ only if
-$\tilde v_0 = \tilde F$. This is the limit of the exact solution
-{eq}`eq-general-solution` as $\ve \to 0$ with $\tilde t > 0$ held fixed.
-:::
-
-:::{prf:definition} Inner solution
-:label: def-inner
-
-The **inner solution** $u_\mathrm{in}$ is obtained by first rescaling time by
-the thickness of the layer, so that $\ve$ leaves the equation, and then
-setting $\ve = 0$. It keeps the order of the equation, carries the initial
-condition, and is valid inside the layer.
-:::
-
-:::{prf:example} The inner solution
-:label: ex-inner-solution
-
-With $\sigma = \tilde t/\ve$ the equation is {eq}`eq-inner-equation`. It
-contains no $\ve$, so setting $\ve = 0$ changes nothing here; when the force
-varies it freezes the force at $\tilde F(0)$, as in
-{prf:ref}`ex-ramped-force`. The equation is first order, takes the initial
-condition, and has the solution
-
-$$
-\tilde v_\mathrm{in}(\sigma) = \tilde F + (\tilde v_0 - \tilde F)\,e^{-\sigma} .
-$$ (eq-toy-inner)
-
-This is the limit of {eq}`eq-general-solution` as $\ve \to 0$ with
-$\sigma = \tilde t/\ve$ held fixed.
-:::
-
 The interval $0 \le \tilde t \lesssim \ve$ on which the two limits differ is
 the initial layer. Its thickness $\ve$ is set by the equation, not chosen; in
 dimensional time it is one $\tau_i$, a microsecond.
+
+## Matching and the composite solution
 
 :::{prf:definition} Matching and the composite solution
 :label: def-matching
@@ -271,8 +292,8 @@ Where each one is right:
 
 | | $\tilde t \sim \ve$ | $\ve \ll \tilde t \ll 1$ | $\tilde t \sim 1$ |
 |---|---|---|---|
-| $\tilde v_\mathrm{in}$ | right | right, $= \tilde F(0)$ | wrong: stuck at $\tilde F(0)$ |
-| $\tilde v_\mathrm{out}$ | wrong: no transient | right, $= \tilde F(0)$ | right |
+| $\tilde v_\mathrm{in}$ | right | right | wrong (stuck at $\tilde F(0)$) |
+| $\tilde v_\mathrm{out}$ | wrong (no transient) | right | right |
 
 In the overlap region both equal $\tilde F(0)$; if the two limits in
 {eq}`eq-matching` disagreed, the layer would have been scaled wrongly. Inside
@@ -284,9 +305,10 @@ reduces to $\tilde v_\mathrm{out}$.
 :::{prf:example} The composite solution
 :label: ex-composite-solution
 
-From {prf:ref}`ex-inner-solution`, $\tilde v_\mathrm{in} \to \tilde F$ as
-$\sigma \to \infty$, and from {prf:ref}`ex-outer-solution`,
-$\tilde v_\mathrm{out} = \tilde F$ for all $\tilde t$. The matching condition
+For constant $\tilde F$, {eq}`eq-cell-inner` gives
+$\tilde v_\mathrm{in} \to \tilde F$ as $\sigma \to \infty$, and
+{eq}`eq-cell-outer` gives $\tilde v_\mathrm{out} = \tilde F$ for all
+$\tilde t$. The matching condition
 holds with $\tilde v_\mathrm{common} = \tilde F$, and
 
 $$
@@ -335,6 +357,7 @@ force varies this is no longer true, and the next section measures the error.
 
 :::{prf:remark} What to do about a singular limit
 :label: rmk-singular-recipe
+:class: dropdown
 
 Singular limits are not to be avoided; almost every useful reduction in
 mathematical biology is one. The method has four steps:
@@ -347,10 +370,10 @@ mathematical biology is one. The method has four steps:
    decide whether to keep it.
 
 Step 4 is the one most often skipped; for the cell it is carried out in
-[](force-sets-velocity.md).
+[](error-analysis.md).
 :::
 
-## A force that varies on the slow time scale
+## A slowly varying force
 
 With $\tilde F$ constant, the outer solution is the common limit and the
 composite collapses onto the inner solution, so the three curves coincide and
@@ -360,6 +383,7 @@ scale. Take the simplest one.
 
 :::{prf:example} A ramped force
 :label: ex-ramped-force
+:class: dropdown
 
 Consider
 
@@ -537,6 +561,7 @@ $$
 
 :::{prf:remark} Reading the bound
 :label: rmk-reading-bound
+:class: dropdown
 
 Four consequences of {eq}`eq-uniform-bound`.
 

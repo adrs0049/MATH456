@@ -38,20 +38,18 @@ project:
           level: 1
         - file: modeling/what-is-a-model.md
           level: 2
-        - file: modeling/scales-and-forces.md
+        - file: modeling/why-inertia-is-irrelevant.md
           level: 2
         # I. From Newton's second law to a force balance
         - file: overdamped/index.md
           level: 1
-        - file: overdamped/newton-with-drag.md
-          level: 2
         - file: overdamped/scaling-the-equation.md
           level: 2
         - file: overdamped/singular-limit.md
           level: 2
-        - file: overdamped/force-sets-velocity.md
-          level: 2
         - file: overdamped/integrating-factor.md
+          level: 2
+        - file: overdamped/error-analysis.md
           level: 2
         # II. Flows on the line
         - file: one-dimensional/index.md
@@ -63,10 +61,6 @@ project:
         - file: one-dimensional/transcritical.md
           level: 2
         - file: one-dimensional/saddle-node.md
-          level: 2
-        - file: one-dimensional/sickle-cell.md
-          level: 2
-        - file: one-dimensional/sickle-cell-without-malaria.md
           level: 2
         - file: one-dimensional/pitchfork.md
           level: 2
@@ -88,15 +82,14 @@ project:
       title: "0. What Is a Model"
       children:
         - file: modeling/what-is-a-model.md
-        - file: modeling/scales-and-forces.md
+        - file: modeling/why-inertia-is-irrelevant.md
     - file: overdamped/index.md
       title: "1. From Newton's Second Law to a Force Balance"
       children:
-        - file: overdamped/newton-with-drag.md
         - file: overdamped/scaling-the-equation.md
         - file: overdamped/singular-limit.md
-        - file: overdamped/force-sets-velocity.md
         - file: overdamped/integrating-factor.md
+        - file: overdamped/error-analysis.md
     - file: one-dimensional/index.md
       title: "2. Flows on the Line"
       children:
@@ -104,8 +97,6 @@ project:
         - file: one-dimensional/populations-and-fractions.md
         - file: one-dimensional/transcritical.md
         - file: one-dimensional/saddle-node.md
-        - file: one-dimensional/sickle-cell.md
-        - file: one-dimensional/sickle-cell-without-malaria.md
         - file: one-dimensional/pitchfork.md
     - file: phase-plane/index.md
       title: "3. The Phase Plane"

@@ -9,7 +9,7 @@ downloads:
     title: Download PDF
 ---
 
-# The Integrating Factor
+# Background: The Integrating Factor
 
 :::{tip} Big Idea
 A linear first-order equation $y' + p\,y = q$ can always be solved in closed
@@ -77,6 +77,7 @@ and at $t = 0$ the integral vanishes, so $y(0) = y_0$.
 
 :::{prf:remark} The method in three steps
 :label: rmk-if-steps
+:class: dropdown
 
 As a recipe:
 
