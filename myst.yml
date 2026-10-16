@@ -7,7 +7,7 @@ project:
   settings:
     output_matplotlib_strings: remove
   title: MATH 456 Notes
-  description: Nonlinear dynamics for mathematical biology, from a force balance to the phase plane
+  description: Nonlinear dynamics for mathematical biology, from a force balance to bifurcations on the line
   short_title: MATH 456
   authors:
     - name: Andreas Buttenschoen
@@ -62,17 +62,6 @@ project:
           level: 2
         - file: one-dimensional/saddle-node.md
           level: 2
-        - file: one-dimensional/pitchfork.md
-          level: 2
-        # III. The phase plane
-        - file: phase-plane/index.md
-          level: 1
-        - file: phase-plane/drug-in-the-plane.md
-          level: 2
-        - file: phase-plane/quasi-steady-state.md
-          level: 2
-        - file: phase-plane/fitzhugh-nagumo.md
-          level: 2
   downloads:
     - id: full-book-pdf
       title: Download Full Book (PDF)
@@ -97,13 +86,6 @@ project:
         - file: one-dimensional/populations-and-fractions.md
         - file: one-dimensional/transcritical.md
         - file: one-dimensional/saddle-node.md
-        - file: one-dimensional/pitchfork.md
-    - file: phase-plane/index.md
-      title: "3. The Phase Plane"
-      children:
-        - file: phase-plane/drug-in-the-plane.md
-        - file: phase-plane/quasi-steady-state.md
-        - file: phase-plane/fitzhugh-nagumo.md
     - title: References
       children:
         - file: bibliography.md

@@ -20,12 +20,8 @@ to something simple enough to analyze, and checking what the reduction cost.
 
 2. **[Flows on the Line](one-dimensional/index.md).** One-dimensional
    nonlinear ODEs: balance equations, the phase line, steady states and their
-   stability, and the transcritical, saddle-node and pitchfork bifurcations,
-   with examples from antibiotic resistance and cell polarity.
-
-3. **[The Phase Plane](phase-plane/index.md).** Two-dimensional systems:
-   nullclines, linearization, saddles and separatrices, quasi-steady-state
-   reduction, and oscillations and excitability in the FitzHugh–Nagumo model.
+   stability, and the transcritical and saddle-node bifurcations, with
+   examples from antibiotic resistance.
 
 ## Background
 

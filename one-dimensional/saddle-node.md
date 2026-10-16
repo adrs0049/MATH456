@@ -89,8 +89,8 @@ level is halved.
 
 :::{warning} What the quasi-steady state costs
 Replacing $D$ by its steady state for the current $N$ is the **quasi-steady
-state** approximation, made precise in [](../phase-plane/quasi-steady-state.md).
-It does not change the steady states: at a steady state of the pair
+state** approximation; the next remark shows when it is justified. It does
+not change the steady states: at a steady state of the pair
 {eq}`eq-bf-drug`, {eq}`eq-bf-cells`, $\dot D = 0$ holds anyway. It changes the
 *dynamics*, and it is what lets us describe the system by $N$ alone, with a
 phase line.
@@ -117,23 +117,21 @@ with $a = kD_0$. The small parameter is the growth rate of the cells divided by
 the clearance rate of the drug. Setting $\ve = 0$ gives $d = 1/(1 + Kn/N_c)$,
 which is {eq}`eq-bf-drug-qss`. The drug relaxes to this value at rate
 $(1 + Kn/N_c)/\ve > 0$ for every $n$, so the reduction is justified whenever
-$\ve$ is small. Three facts follow, all worked out in
-[](../phase-plane/quasi-steady-state.md):
+$\ve$ is small. A closer analysis of the two-variable system gives three
+facts:
 
 1. **The bifurcation diagram is exact for every $\ve$.** The full model has the
    same steady states, and each is a saddle or stable exactly when the phase
-   line of {eq}`eq-bf-inoculum` says unstable or stable
-   ({prf:ref}`prop-qss-inoc-exact`).
+   line of {eq}`eq-bf-inoculum` says unstable or stable.
 2. **The first correction only slows time.** The drug lags behind its target,
    which multiplies the right-hand side of {eq}`eq-bf-inoculum` by a positive
-   factor $1 - O(\ve)$ ({prf:ref}`prop-qss-inoc-slow`).
+   factor $1 - O(\ve)$.
 3. **The threshold inoculum depends on the protocol.** If the drug starts
    above its quasi-steady level, for example when cells enter a host that
    already holds the full dose, the threshold rises above $N_-$; if it starts
    below, it falls. The shift is
    $N_-\,k\,\big(D(0) - D_-\big)/(\delta + \gamma N_-)$, the extra kill rate
-   times the time the drug takes to settle
-   ({prf:ref}`prop-qss-threshold-shift`).
+   times the time the drug takes to settle.
 
 For TB, $r = 1$/day and meropenem's half-life of about an hour gives
 $\delta \approx 17$/day, so $\ve \approx 0.06$. The reduction is well
@@ -510,12 +508,10 @@ never changes: $\dot a = 0$. Then the flow is vertical everywhere, pointing up
 on one side of the $N$-nullcline and down on the other, and every point of the
 nullcline is a steady state. In a genuine two-variable model the second
 variable has its own nullcline, the flow is no longer vertical, and the steady
-states are only the points where the two nullclines cross; see
-[](../phase-plane/drug-in-the-plane.md). If the dose changes slowly instead,
+states are only the points where the two nullclines cross. If the dose changes slowly instead,
 with $\dot a$ small but not zero, the state creeps along a stable piece of the
 $N$-nullcline and jumps when that piece ends at the fold. That is the
-hysteresis loop below, and the starting point of the fast-slow analysis in
-[](../phase-plane/quasi-steady-state.md).
+hysteresis loop below.
 :::
 
 ```{code-cell} python
