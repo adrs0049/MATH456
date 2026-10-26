@@ -64,7 +64,7 @@ def separatrix(a, delta):
     until it leaves the box 0 <= d <= 1."""
     Nm = interior_states(a)[0]
     w, V = np.linalg.eig(jacobian(Nm, dbar(Nm), a, delta))
-    v = V[:, np.argmin(w)]
+    v = V[:, np.argmin(w.real)].real   # numpy >= 2.5 returns complex arrays
 
     def leave(t, y):
         return min(y[1] + 0.02, 1.02 - y[1], y[0])
