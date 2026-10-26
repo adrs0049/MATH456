@@ -23,6 +23,11 @@ to something simple enough to analyze, and checking what the reduction cost.
    stability, and the transcritical and saddle-node bifurcations, with
    examples from antibiotic resistance.
 
+3. **[The Phase Plane](phase-plane/index.md).** Two-dimensional systems:
+   linear systems and the trace-determinant classification, nullclines,
+   saddles and separatrices, with the drug and bacteria model of Part 2 kept
+   in two variables.
+
 ## Background
 
 Calculus and an introductory course in ordinary differential equations. No

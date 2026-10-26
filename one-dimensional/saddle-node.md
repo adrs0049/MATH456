@@ -508,7 +508,8 @@ never changes: $\dot a = 0$. Then the flow is vertical everywhere, pointing up
 on one side of the $N$-nullcline and down on the other, and every point of the
 nullcline is a steady state. In a genuine two-variable model the second
 variable has its own nullcline, the flow is no longer vertical, and the steady
-states are only the points where the two nullclines cross. If the dose changes slowly instead,
+states are only the points where the two nullclines cross; see
+[](../phase-plane/drug-in-the-plane.md). If the dose changes slowly instead,
 with $\dot a$ small but not zero, the state creeps along a stable piece of the
 $N$-nullcline and jumps when that piece ends at the fold. That is the
 hysteresis loop below.
