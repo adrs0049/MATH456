@@ -51,6 +51,8 @@ project:
           level: 2
         - file: overdamped/error-analysis.md
           level: 2
+        - file: overdamped/exercises.md
+          level: 2
         # II. Flows on the line
         - file: one-dimensional/index.md
           level: 1
@@ -98,6 +100,7 @@ project:
         - file: overdamped/singular-limit.md
         - file: overdamped/integrating-factor.md
         - file: overdamped/error-analysis.md
+        - file: overdamped/exercises.md
     - file: one-dimensional/index.md
       title: "2. Flows on the Line"
       children:

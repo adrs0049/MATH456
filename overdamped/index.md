@@ -14,6 +14,7 @@ exports:
       - singular-limit.md
       - integrating-factor.md
       - error-analysis.md
+      - exercises.md
 downloads:
   - id: overdamped-part-pdf
     title: Download the part (PDF)
