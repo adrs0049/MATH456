@@ -304,6 +304,7 @@ reduces to $\tilde v_\mathrm{out}$.
 
 :::{prf:example} The composite solution
 :label: ex-composite-solution
+:class: dropdown
 
 For constant $\tilde F$, {eq}`eq-cell-inner` gives
 $\tilde v_\mathrm{in} \to \tilde F$ as $\sigma \to \infty$, and

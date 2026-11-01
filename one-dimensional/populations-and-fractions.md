@@ -254,6 +254,7 @@ than sensitive ones.
 
 :::{prf:example} Losing resistance once the drug is gone
 :label: ex-pf-resistance
+:class: dropdown
 
 Illustrative numbers: without the drug, sensitive cells grow at
 $r_\mathrm{sen} = 2.0$/h and resistant cells at $r_\mathrm{res} = 1.9$/h, a
@@ -410,6 +411,7 @@ resistant fraction, and that fraction rose with the dose {cite:p}`yurtsev2013`.
 
 :::{prf:example} A low dose
 :label: ex-pf-shared
+:class: dropdown
 
 Keep the cost $c = 0.1$/h of {prf:ref}`ex-pf-resistance` and give a dose that
 slows sensitive cells by $a = 0.5$/h. Then $p^\ast = 1 - 0.1/0.5 = 0.8$: four

@@ -181,6 +181,7 @@ an arrow that says where the state moves next. The arrows together form the
 
 :::{prf:example} Three arrows
 :label: ex-pp-arrows
+:class: dropdown
 
 Take $a = 2$, $\delta = 2$. At $(1, 1)$: $\dot N = 0.9 - 2 = -1.1$ and
 $\dot d = 2(1 - 1 - 1) = -2$, down and left. At $(5, 0.1)$: $\dot N = 1.5$,
@@ -548,6 +549,7 @@ there), a factor of seven.
 
 :::{prf:example} Same cells, same dose, opposite outcomes
 :label: ex-pp-protocol
+:class: dropdown
 
 With the slow drug, let $10^8$ cells per mL ($N = 1$) meet a patient who
 already holds the full dose. At $d = 1$ the separatrix sits at

@@ -181,6 +181,7 @@ $$ (eq-coasting-position)
 
 :::{prf:example} Coasting distance of a crawling cell
 :label: ex-coasting-cell
+:class: dropdown
 
 As $t \to \infty$, {eq}`eq-coasting-position` tends to the **coasting
 distance**
@@ -318,6 +319,7 @@ at speed $u$ through a fluid of density $\rho$.
 
 :::{prf:example} Reynolds number of a crawling cell
 :label: ex-reynolds
+:class: dropdown
 
 With $\rho \approx 10^3\ \mathrm{kg/m^3}$, $u \approx 10^{-8}\ \mathrm{m/s}$
 ($0.6\ \mu$m/min), $L \approx 10^{-5}$ m and $\eta \approx 10^{-2}$ Pa$\cdot$s

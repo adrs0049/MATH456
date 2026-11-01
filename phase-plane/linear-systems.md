@@ -228,6 +228,7 @@ place.
 
 :::{prf:example} Turning and stretching
 :label: ex-pp-spiral
+:class: dropdown
 
 Take
 
@@ -363,6 +364,7 @@ $\alpha = T/2$, that is the sign of the trace.
 
 :::{prf:example} A tilted spiral
 :label: ex-pp-tilted-spiral
+:class: dropdown
 
 Take
 
@@ -440,6 +442,7 @@ like.
 
 :::{prf:example} A repeated eigenvalue
 :label: ex-pp-repeated
+:class: dropdown
 
 Take
 

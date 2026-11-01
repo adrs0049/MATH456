@@ -105,6 +105,7 @@ matter for a first estimate.
 
 :::{prf:example} Reading a rate from a measured time
 :label: ex-ir-rac
+:class: dropdown
 
 Single molecules of the protein Rac, a GTPase, stay on the cell membrane for
 about $2$ s. Then $b \approx 1/(2\ \text{s}) = 0.5\ \text{s}^{-1}$.
@@ -250,6 +251,7 @@ problems.
 
 :::{prf:example} A model that fails both checks
 :label: ex-ir-artifacts
+:class: dropdown
 
 Take, for a population density $C$,
 
