@@ -9,7 +9,7 @@ downloads:
     title: Download PDF
 ---
 
-# Exercises: The Phase Plane
+# Exercises
 
 The exercises follow the pages of this part, and the last section adds two
 classical models that are not in the notes. Some are calculations by hand, and

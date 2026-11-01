@@ -9,7 +9,7 @@ downloads:
     title: Download PDF
 ---
 
-# Exercises: Flows on the Line
+# Exercises
 
 The exercises follow the pages of this part. Some are calculations by hand,
 some ask you to build a model from a description, and a few ask for a short
