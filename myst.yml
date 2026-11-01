@@ -73,6 +73,10 @@ project:
           level: 2
         - file: phase-plane/quasi-steady-state.md
           level: 2
+        - file: phase-plane/michaelis-menten.md
+          level: 2
+        - file: phase-plane/fast-drug.md
+          level: 2
         - file: phase-plane/fitzhugh-nagumo.md
           level: 2
         - file: phase-plane/exercises.md
@@ -108,6 +112,9 @@ project:
         - file: phase-plane/linear-systems.md
         - file: phase-plane/drug-in-the-plane.md
         - file: phase-plane/quasi-steady-state.md
+          children:
+            - file: phase-plane/michaelis-menten.md
+            - file: phase-plane/fast-drug.md
         - file: phase-plane/fitzhugh-nagumo.md
         - file: phase-plane/exercises.md
     - title: References
