@@ -470,7 +470,8 @@ $T^2 - 4\Delta = (F_N + G_d)^2 - 4F_NG_d + 4F_dG_N = (F_N - G_d)^2 + 4F_dG_N > 0
 In words: the drug harms the cells, and the cells harm the drug. The two
 **cross effects** have the same sign, and solutions near a stable state slide
 in along nearly straight paths without circling it. To circle, one variable
-must promote the other while the other suppresses the first.
+must promote the other while the other suppresses the first; that is the
+situation of [](fitzhugh-nagumo.md).
 
 ## The saddle and its separatrix
 
@@ -637,7 +638,8 @@ The left panel above shows the two motions that the reduction assumes: a fast
 vertical one onto the $d$-nullcline, then a slow one along it. The drug
 equation carries the factor $\delta$, so for TB the arrows are nearly vertical
 except near the $d$-nullcline. This section makes that precise with the
-integrating factor of [](../overdamped/integrating-factor.md).
+integrating factor of [](../overdamped/integrating-factor.md);
+[](quasi-steady-state.md) turns it into a general method.
 
 Let $z(t) = d(t) - \bar d(N(t))$ be the vertical distance from the state to
 the $d$-nullcline. Since
@@ -709,7 +711,7 @@ in the number of cells, and the lag changes the per-capita rate by at most
 $aM/\delta \approx 0.06$/day. Both shrink like $1/\delta$, that is, with the
 small parameter $\ve = r/\delta$ of {prf:ref}`rem-bf-qss-small-parameter`. A
 12% kick matters only near the threshold, where it produces the tilt of the
-separatrix. For the slow drug
+separatrix ({prf:ref}`prop-qss-threshold-shift`). For the slow drug
 $M/\delta = 1.5$, and the bound says nothing.
 
 ```{code-cell} python
@@ -807,4 +809,8 @@ are no longer far apart, and the agreement is gone.
 Everything above rests on one fact:
 $\partial\dot d/\partial d = -\delta(1 + N/N_c) \le -\delta$ for every $N$.
 The drug is pulled toward its nullcline at a rate that is never small,
-anywhere along it.
+anywhere along it. In the language of [](quasi-steady-state.md), the critical
+manifold attracts uniformly, and Tikhonov's theorem
+{prf:ref}`thm-qss-tikhonov` applies. Where a fast nullcline folds, the pull
+vanishes, and that is where the oscillations of [](fitzhugh-nagumo.md) come
+from.

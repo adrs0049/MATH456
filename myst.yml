@@ -69,6 +69,10 @@ project:
           level: 2
         - file: phase-plane/drug-in-the-plane.md
           level: 2
+        - file: phase-plane/quasi-steady-state.md
+          level: 2
+        - file: phase-plane/fitzhugh-nagumo.md
+          level: 2
   downloads:
     - id: full-book-pdf
       title: Download Full Book (PDF)
@@ -98,6 +102,8 @@ project:
       children:
         - file: phase-plane/linear-systems.md
         - file: phase-plane/drug-in-the-plane.md
+        - file: phase-plane/quasi-steady-state.md
+        - file: phase-plane/fitzhugh-nagumo.md
     - title: References
       children:
         - file: bibliography.md
