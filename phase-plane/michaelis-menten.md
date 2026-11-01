@@ -52,8 +52,26 @@ S + E \;\underset{k_{-1}}{\overset{k_1}{\rightleftharpoons}}\; C
 \;\overset{k_2}{\longrightarrow}\; E + P .
 $$
 
-Mass action gives one equation per species. The enzyme is never used up, so
-$E + C = E_0$, the total amount of enzyme, and $E = E_0 - C$. That leaves
+Mass action gives one equation per species:
+
+$$
+\frac{\dd S}{\dd t} = -k_1ES + k_{-1}C,
+\qquad
+\frac{\dd E}{\dd t} = -k_1ES + (k_{-1} + k_2)\,C,
+$$
+
+$$
+\frac{\dd C}{\dd t} = k_1ES - (k_{-1} + k_2)\,C,
+\qquad
+\frac{\dd P}{\dd t} = k_2C .
+$$
+
+Adding the equations for $E$ and $C$ gives $\dd(E + C)/\dd t = 0$: the
+enzyme is never used up, so $E + C = E_0$, the total amount of enzyme, and
+$E = E_0 - C$. Adding the equations for $S$, $C$ and $P$ gives
+$S + C + P = S_0$: every substrate molecule is free, bound or converted. The
+product does not act back on the other species, so it follows from $C$ by one
+integration. That leaves
 
 $$
 \frac{\dd S}{\dd t} = -k_1(E_0 - C)\,S + k_{-1}C,
@@ -66,7 +84,18 @@ free enzyme.
 
 **Scale.** Measure substrate against its initial amount, complex against the
 total enzyme, and time in units of $1/(k_1E_0)$:
-$u = S/S_0$, $v = C/E_0$, $\tau = k_1E_0\,t$. Then {eq}`eq-qss-mm-dim` becomes
+$u = S/S_0$, $v = C/E_0$, $\tau = k_1E_0\,t$. The time unit is the slow one:
+$k_1E_0$ is the rate at which a substrate molecule meets free enzyme when all
+the enzyme is free. With $\dd/\dd t = k_1E_0\,\dd/\dd\tau$,
+{eq}`eq-qss-mm-dim` becomes
+
+$$
+k_1E_0S_0\,\frac{\dd u}{\dd\tau} = -k_1E_0S_0\,(1 - v)\,u + k_{-1}E_0\,v,
+\qquad
+k_1E_0^2\,\frac{\dd v}{\dd\tau} = k_1E_0S_0\,(1 - v)\,u - (k_{-1} + k_2)E_0\,v .
+$$
+
+Dividing both equations by $k_1E_0S_0$ gives
 
 $$
 \frac{\dd u}{\dd\tau} = -u + (u + K - \lambda)\,v,
@@ -82,9 +111,12 @@ K = \frac{k_{-1} + k_2}{k_1S_0}, \qquad
 \lambda = \frac{k_2}{k_1S_0} .
 $$
 
-The small parameter is the ratio of enzyme to substrate. It is small because
-the enzyme is recycled: there is much less of it than of the substrate it
-processes.
+The unbinding term of the substrate equation has become
+$(K - \lambda)\,v$, since $k_{-1}/(k_1S_0) = K - \lambda$. The small
+parameter is the ratio of enzyme to substrate, and it multiplies the derivative of the complex because
+the complex can hold at most $E_0$ molecules while the flux into it is set by
+$S_0$: it fills and empties quickly. It is small because the enzyme is
+recycled: there is much less of it than of the substrate it processes.
 
 :::{prf:proposition} The Michaelis-Menten law
 :label: prop-qss-mm
@@ -107,18 +139,50 @@ $$ (eq-qss-mm-law)
 :::{prf:proof}
 :class: dropdown
 
-Setting $\ve = 0$ gives $u = (u + K)v$, so $v = u/(u + K)$. With
-$g(u, v) = u - (u + K)v$, $\partial g/\partial v = -(u + K) \le -K < 0$, so the
-manifold attracts at rate at least $K$ on the fast time. Substituting into the
-slow equation,
+We follow the recipe of [](quasi-steady-state.md), with
+$g(u, v) = u - (u + K)\,v$ the right-hand side of the complex equation.
+
+*Slave.* At $\ve = 0$ the complex equation is $0 = u - (u + K)\,v$. It is
+linear in $v$ and $u + K > 0$, so it has the single solution
+$v = h(u) = u/(u + K)$. Note $0 \le h(u) < 1$: never more than all the enzyme
+is bound.
+
+*Check.* $\partial g/\partial v = -(u + K) \le -K < 0$ for $u \ge 0$. The
+layer problem {eq}`eq-qss-layer` is linear,
+$\dd v/\dd T = u_0 - (u_0 + K)\,v$, with solution
 
 $$
-\frac{\dd u}{\dd\tau} = -u + (u + K - \lambda)\,\frac{u}{u + K}
+v(T) = h(u_0) + \big(v(0) - h(u_0)\big)\,e^{-(u_0 + K)\,T} ,
+$$
+
+so every initial complex level, not only a nearby one, relaxes to the
+manifold, at rate at least $K$ on the fast time.
+
+*Reduce.* Write the substrate equation as
+$\dd u/\dd\tau = -u(1 - v) + (K - \lambda)\,v$: binding minus unbinding. On
+the manifold the complex is at rest, so binding balances unbinding plus
+conversion, $u(1 - v) = Kv$. Hence
+
+$$
+\frac{\dd u}{\dd\tau} = -Kv + (K - \lambda)\,v = -\lambda\,v
 = -\frac{\lambda\,u}{u + K} .
 $$
 
-In the original units, $C = E_0 v = E_0 S/(S + K_M)$ since
-$u/(u + K) = S/(S + K S_0) = S/(S + K_M)$, and $\dd P/\dd t = k_2 C$.
+Binding and unbinding cancel, and the substrate is lost only through
+conversion.
+
+*Original units.* $C = E_0v = E_0\,h(S/S_0)$, and
+
+$$
+h\Big(\frac{S}{S_0}\Big) = \frac{S/S_0}{S/S_0 + K} = \frac{S}{S + KS_0}
+= \frac{S}{S + K_M},
+\qquad KS_0 = \frac{k_{-1} + k_2}{k_1} = K_M .
+$$
+
+So $C = E_0S/(K_M + S)$ and $\dd P/\dd t = k_2C = k_2E_0S/(K_M + S)$. The
+reduced substrate equation in the same units is
+$\dd S/\dd t = k_1E_0S_0\,\dd u/\dd\tau = -k_2E_0\,v = -\dd P/\dd t$: on
+the slow time the substrate turns directly into product.
 :::
 
 This is the **Michaelis-Menten law** {cite:p}`michaelis1913`, derived by this
@@ -137,9 +201,18 @@ v = \frac{1}{1 + K}\Big(1 - e^{-(1 + K)T}\Big),
 C = \frac{E_0S_0}{K_M + S_0}\Big(1 - e^{-k_1(S_0 + K_M)\,t}\Big).
 $$
 
-The complex builds up in a time $1/\big(k_1(S_0 + K_M)\big)$, during which
-almost no substrate is used. Unless the experiment measures that first
-instant, the reduction loses nothing.
+The complex builds up in a time $1/\big(k_1(S_0 + K_M)\big)$. Almost no
+product forms in that time, so by $S + C + P = S_0$ the substrate used up in
+the layer is the substrate now bound in complex:
+
+$$
+\frac{S}{S_0} \approx 1 - \frac{C}{S_0} = 1 - \frac{\ve}{1 + K}
+\quad\text{at the end of the layer.}
+$$
+
+The reduced problem, which starts from $u(0) = 1$, is off by this $O(\ve)$
+amount of substrate from then on. Unless the experiment measures that first
+instant, or uses as much enzyme as substrate, the reduction loses nothing.
 
 ```{code-cell} python
 :tags: [hide-input]
@@ -204,8 +277,10 @@ $$
 \frac{E_0}{S_0 + K_M} \ll 1 .
 $$
 
-When $K_M$ is large the reduction works even if there is as much enzyme as
-substrate. Different scalings can give different $\ve$, and the right one
+In the scaling above this ratio is $E_0/(S_0 + K_M) = \ve/(1 + K)$: the layer
+relaxes at rate $1 + K$, not $1$, and $\ve/(1 + K)$ is exactly the fraction
+of substrate the layer uses up. When $K_M$ is large the reduction works even
+if there is as much enzyme as substrate. Different scalings can give different $\ve$, and the right one
 compares the two time scales the question actually involves.
 :::
 
