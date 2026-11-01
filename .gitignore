@@ -29,3 +29,6 @@ exports/
 
 # Local notes for Claude Code (not published).
 CLAUDE.md
+
+# Exercises with worked solutions, kept local and out of the TOC.
+*/exercises-solutions.md

@@ -31,9 +31,64 @@ function visitAll(node, callback) {
   }
 }
 
+// myst-to-tex (mystmd 1.10) has no handler for exercise and solution nodes and
+// drops them with their content. Only PDF builds rewrite them, as a bold label
+// followed by the body; HTML builds (`myst start`, `myst build --html`) keep
+// the numbered boxes and dropdowns. The Makefile and CI never build both in
+// one command.
+const PDF_BUILD = process.argv.some((a) => ['--pdf', '--tex'].includes(a));
+
+function text(value) {
+  return { type: 'text', value };
+}
+
+// Replace each exercise by "Exercise k (title)." and its body, and each
+// solution by "Solution." and its body.
+function flattenExercises(tree) {
+  let count = 0;
+  function rewrite(node) {
+    if (!node.children) return;
+    const out = [];
+    for (const child of node.children) {
+      if (child.type !== 'exercise' && child.type !== 'solution') {
+        rewrite(child);
+        out.push(child);
+        continue;
+      }
+      const [first, ...rest] = child.children ?? [];
+      const hasTitle = first && first.type === 'admonitionTitle';
+      const body = hasTitle ? rest : child.children ?? [];
+      let label;
+      if (child.type === 'exercise') {
+        count += 1;
+        label = hasTitle
+          ? [text(`Exercise ${count} (`), ...first.children, text(').')]
+          : [text(`Exercise ${count}.`)];
+      } else {
+        label = [text('Solution.')];
+      }
+      out.push({ type: 'paragraph', children: [{ type: 'strong', children: label }] });
+      for (const inner of body) {
+        rewrite(inner);
+        out.push(inner);
+      }
+    }
+    node.children = out;
+  }
+  rewrite(tree);
+}
+
 const plugin = {
   name: 'latex-proof-fix-plugin',
   transforms: [
+    {
+      name: 'flatten-exercises-for-pdf',
+      doc: 'In PDF builds, rewrite exercise and solution nodes as labelled paragraphs.',
+      stage: 'document',
+      plugin: () => (tree) => {
+        if (PDF_BUILD) flattenExercises(tree);
+      },
+    },
     {
       name: 'fix-unsupported-proof-kinds',
       doc: 'Map unsupported prf: kinds (algorithm, property) to supported environments by rewriting the kind field.',
