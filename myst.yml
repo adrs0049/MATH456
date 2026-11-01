@@ -81,6 +81,8 @@ project:
           level: 2
         - file: phase-plane/fitzhugh-nagumo.md
           level: 2
+        - file: phase-plane/conserved-quantities.md
+          level: 2
         - file: phase-plane/exercises.md
           level: 2
   downloads:
@@ -119,6 +121,7 @@ project:
             - file: phase-plane/michaelis-menten.md
             - file: phase-plane/fast-drug.md
         - file: phase-plane/fitzhugh-nagumo.md
+        - file: phase-plane/conserved-quantities.md
         - file: phase-plane/exercises.md
     - title: References
       children:

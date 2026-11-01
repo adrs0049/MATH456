@@ -11,8 +11,7 @@ downloads:
 
 # Exercises
 
-The exercises follow the pages of this part, and the last section adds two
-classical models that are not in the notes. Some are calculations by hand, and
+The exercises follow the pages of this part. Some are calculations by hand, and
 a few ask for a short computation in Python (or any other language).
 
 ## Linear systems
@@ -188,30 +187,40 @@ $$
    What kind of system is this?
 :::
 
-## Two classical models
+## Conserved quantities and limit cycles
 
-:::{exercise} Lotka-Volterra
+:::{exercise} Lotka-Volterra with parameters
 :label: exr-pp-lotka-volterra
 
-The prey $x$ and the predators $y$ obey
+With prey $x$ and predators $y$,
 
 $$
-\dot x = x(1 - y), \qquad \dot y = y(x - 1) .
+\dot x = x(\alpha - \beta y), \qquad \dot y = y(\delta x - \gamma),
+\qquad \alpha, \beta, \gamma, \delta > 0 .
 $$
 
-1. Find the steady states and draw the nullclines with the directions of the
-   arrows on them. Which way does the flow turn?
-2. Compute the Jacobian and classify the steady states. What does
-   linearization fail to decide?
-3. Show that $H(x, y) = x - \ln x + y - \ln y$ is constant along solutions
-   with $x, y > 0$. (Hint: separate variables in $\dd y/\dd x$.) What does
-   this say about the trajectories near $(1, 1)$?
+1. Explain each of the four terms by its mechanism.
+2. Scale with $x = (\gamma/\delta)X$, $y = (\alpha/\beta)Y$ and $\tau = \alpha t$
+   to get $X' = X(1 - Y)$, $Y' = \rho\,Y(X - 1)$. What is $\rho$? Show that
+   $H = \rho\,(X - \ln X) + Y - \ln Y$ is a conserved quantity, and conclude
+   that every trajectory in $X, Y > 0$ other than the steady state is a closed
+   orbit.
+3. Linearize at $(1, 1)$ and find the period of small orbits in the original
+   time $t$.
+4. Let $P$ be the period of an orbit, of any size. Integrate
+   $\dd(\ln Y)/\dd\tau$ and $\dd(\ln X)/\dd\tau$ over one period to show that
+   the time averages of $X$ and $Y$ over the orbit are both $1$. What are the
+   average prey and predator populations in the original units?
+5. Fishing removes prey and predators alike, at the per-capita rate
+   $h < \alpha$. How do the average populations change? During the First World
+   War fishing in the Adriatic almost stopped, and the share of predatory fish
+   in the catch rose. Does the model explain this?
 :::
 
 :::{exercise} Predators and crowded prey
 :label: exr-pp-predator-prey
 
-Give the prey of the Lotka-Volterra model above logistic growth:
+Give the prey of the Lotka-Volterra model logistic growth:
 
 $$
 \dot u = u(1 - u) - \alpha uv, \qquad \dot v = -\delta v + \beta uv,
@@ -225,5 +234,36 @@ $$
    $\dot W \le \beta(1 + \delta)^2/4 - \delta W$, and conclude that the
    triangle $u, v \ge 0$, $W \le M$ traps every trajectory if $M$ is large
    enough.
+4. Use Dulac's criterion with $B = 1/(uv)$ to show that there is no closed
+   orbit with $u, v > 0$. Compute the same quantity for Lotka-Volterra
+   ($u(1 - u)$ replaced by $u$). What did crowding do to the closed orbits?
 :::
 
+:::{exercise} The pendulum
+:label: exr-pp-pendulum
+
+A frictionless pendulum at angle $\theta$ from the vertical obeys, in scaled
+time, $\ddot\theta = -\sin\theta$, that is, $\dot\theta = y$,
+$\dot y = -\sin\theta$.
+
+1. Show that the system is Hamiltonian with $H = \tfrac12y^2 - \cos\theta$.
+   Find the steady states with $-\pi \le \theta \le \pi$ and classify them,
+   using {prf:ref}`prop-cq-center` where linearization does not decide.
+2. Sketch the level curves of $H$ for $-1 < H < 1$, $H = 1$ and $H > 1$. What
+   does the pendulum do on each?
+3. A swing with amplitude $\theta_\mathrm{max}$ has
+   $y = 0$ at $\theta = \theta_\mathrm{max}$. Use $H$ to show that its period
+   is
+
+   $$
+   P(\theta_\mathrm{max}) = 4\int_0^{\theta_\mathrm{max}}
+   \frac{\dd\theta}{\sqrt{2(\cos\theta - \cos\theta_\mathrm{max})}} .
+   $$
+
+   Compute $P$ numerically for $\theta_\mathrm{max} = 0.1$, $1$, $2$ and $3$,
+   and compare with the harmonic oscillator. Why does $P$ grow without bound
+   as $\theta_\mathrm{max} \to \pi$?
+4. Add friction: $\dot y = -\sin\theta - ky$ with $k > 0$. Compute the
+   divergence and $\dot H$. What do Bendixson's criterion and $\dot H$ say
+   about closed orbits, and what happens to the pendulum?
+:::

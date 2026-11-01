@@ -20,7 +20,9 @@ Fast/slow reduction is then made into a general method with a recipe and an
 error estimate. Flipping one sign, so that an activator makes its own
 inhibitor, turns the folds of an S-shaped switch into oscillations and
 pulses: a trapping region and the Poincaré–Bendixson theorem give a closed
-orbit.
+orbit. That orbit attracts its neighbours, unlike the closed orbits of a
+conserved quantity, and the divergence of the flow, which measures how it
+changes area, tells the two kinds apart and rules closed orbits out.
 :::
 
 ## How the two models compare
