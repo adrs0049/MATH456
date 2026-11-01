@@ -190,18 +190,121 @@ initial value, every solution is of the form {eq}`eq-pp-general`.
 
 In coordinates along the eigenvectors the system splits into two phase lines,
 $\dot c_1 = \lambda_1 c_1$ and $\dot c_2 = \lambda_2 c_2$: these are the
-variables that separate. The eigenvalues are the roots of a quadratic
-({prf:ref}`prop-pp-trace-det` below), so two cases are left: a complex pair,
-and a repeated root.
+variables that separate.
+
+:::{prf:remark} Eigenvectors are the directions the flow does not turn
+:label: rmk-pp-invariant-lines
+:class: dropdown
+
+At a point $\mathbf u$ the velocity is $J\mathbf u$. If $J\mathbf u$ is
+parallel to $\mathbf u$, the solution through $\mathbf u$ moves along the
+line through the steady state and $\mathbf u$, and never leaves it. If not,
+it is pushed off that line, and its direction turns. So the eigenvectors are
+exactly the lines through the steady state that the flow carries into
+themselves: the dashed blue lines in the gallery below.
+
+With two real eigenvalues $\lambda_1 > \lambda_2$ there are two such lines,
+and every other solution turns, but only from one of them towards the other.
+By {eq}`eq-pp-general` its direction is a mix of $\mathbf v_1$ and
+$\mathbf v_2$ with weights $c_1e^{\lambda_1 t}$ and $c_2e^{\lambda_2 t}$. As
+$t \to \infty$ the first weight wins and the solution lines up with
+$\mathbf v_1$; as $t \to -\infty$ it lines up with $\mathbf v_2$. The
+turning is finite: less than half a turn in all.
+:::
+
+The eigenvalues are the roots of a quadratic ({prf:ref}`prop-pp-trace-det`
+below), so two cases are left: a complex pair, for which there is no such
+line, and a repeated root, for which there may be only one.
 
 ## Complex eigenvalues
 
-Since $J$ is real, complex eigenvalues come in a conjugate pair
-$\lambda = \alpha \pm i\omega$, and so do their eigenvectors,
-$\mathbf v = \mathbf a \pm i\mathbf b$ with real vectors $\mathbf a$,
-$\mathbf b$. The computation behind {prf:ref}`prop-pp-eigen-solutions` works
-just as well with complex numbers, but $e^{\lambda t}\mathbf v$ is then a
-complex solution. Its real and imaginary parts are real solutions.
+When $T^2 < 4\Delta$, in the notation of {prf:ref}`prop-pp-trace-det`, the
+eigenvalues are not real, and neither is any eigenvector: no line through the
+steady state is carried into itself ({prf:ref}`rmk-pp-invariant-lines`).
+Every direction is turned, so no
+solution keeps its direction, and the ansatz {eq}`eq-pp-separation` finds
+nothing. The simplest system that turns every direction shows what takes its
+place.
+
+:::{prf:example} Turning and stretching
+:label: ex-pp-spiral
+
+Take
+
+$$
+\dot x = \alpha x - \omega y,
+\qquad
+\dot y = \omega x + \alpha y,
+\qquad
+J = \begin{pmatrix} \alpha & -\omega \\ \omega & \alpha \end{pmatrix},
+\quad \omega > 0 ,
+$$
+
+with $T = 2\alpha$, $\Delta = \alpha^2 + \omega^2$ and eigenvalues
+$\alpha \pm i\omega$. In polar coordinates $x = r\cos\theta$,
+$y = r\sin\theta$,
+
+$$
+r\dot r = x\dot x + y\dot y = \alpha r^2,
+\qquad
+r^2\dot\theta = x\dot y - y\dot x = \omega r^2 ,
+$$
+
+so that
+
+$$
+\dot r = \alpha r, \qquad \dot\theta = \omega .
+$$ (eq-pp-polar)
+
+The system splits into two phase lines again, now for the distance and the
+angle: $r = r_0e^{\alpha t}$ and $\theta = \theta_0 + \omega t$. Every
+solution turns counterclockwise at the constant rate $\omega$, while its
+distance from the origin shrinks or grows at the rate $\alpha$.
+:::
+
+This is what a complex eigenvalue means. Write the point as the complex number
+$z = x + iy$. Then
+
+$$
+\dot z = (\alpha x - \omega y) + i(\omega x + \alpha y) = (\alpha + i\omega)(x + iy),
+$$
+
+that is, $\dot z = \lambda z$ with $\lambda = \alpha + i\omega$: a phase line
+whose slope is a complex number, solved by
+$z = z_0e^{\lambda t} = z_0\,e^{\alpha t}e^{i\omega t}$. By Euler's formula,
+$e^{i\omega t} = \cos\omega t + i\sin\omega t$, and multiplying by it turns a
+point by the angle $\omega t$; multiplying by $e^{\alpha t}$ stretches it.
+**The real part of the eigenvalue is the rate of growth, and the imaginary
+part is the rate of turning.**
+
+Every real matrix with complex eigenvalues is this example, drawn on a tilted
+frame. Let $\lambda = \alpha + i\omega$, $\omega \ne 0$, be an eigenvalue of
+$J$ with eigenvector $\mathbf v = \mathbf a + i\mathbf b$, where $\mathbf a$ and
+$\mathbf b$ are real vectors. The real and imaginary parts of
+$J(\mathbf a + i\mathbf b) = (\alpha + i\omega)(\mathbf a + i\mathbf b)$ are
+
+$$
+J\mathbf a = \alpha\,\mathbf a + \omega\,(-\mathbf b),
+\qquad
+J(-\mathbf b) = -\omega\,\mathbf a + \alpha\,(-\mathbf b) .
+$$ (eq-pp-tilted-frame)
+
+The matrix of {prf:ref}`ex-pp-spiral` acts on $(1, 0)$ and $(0, 1)$ in exactly
+this way. So in coordinates along $\mathbf a$ and $-\mathbf b$, that is,
+writing $\mathbf u = p\,\mathbf a - q\,\mathbf b$, the system becomes
+
+$$
+\dot p = \alpha p - \omega q,
+\qquad
+\dot q = \omega p + \alpha q ,
+$$
+
+the example again. For real eigenvalues, coordinates along the two
+eigenvectors split the system into two phase lines. For complex ones,
+coordinates along $\mathbf a$ and $-\mathbf b$ turn it into the turning and
+stretching of {eq}`eq-pp-polar`. Circles in $(p, q)$ become ellipses in the
+plane, so the solutions are spirals around ellipses spanned by $\mathbf a$
+and $\mathbf b$, turning from $\mathbf a$ towards $-\mathbf b$.
 
 :::{prf:proposition} Complex eigenvalues
 :label: prop-pp-complex
@@ -222,53 +325,107 @@ with $c_1\mathbf a + c_2\mathbf b = \mathbf u(0)$.
 :::{prf:proof}
 :class: dropdown
 
-By Euler's formula, $e^{\lambda t} = e^{\alpha t}(\cos\omega t + i\sin\omega t)$.
-Multiplying by $\mathbf a + i\mathbf b$ and collecting terms,
-$e^{\lambda t}\mathbf v = \mathbf u_1 + i\,\mathbf u_2$. This solves the
-system, so $\dot{\mathbf u}_1 + i\dot{\mathbf u}_2 = J\mathbf u_1 + iJ\mathbf u_2$.
-Since $J$ is real, $J\mathbf u_1$ and $J\mathbf u_2$ are real, and comparing
-real and imaginary parts gives $\dot{\mathbf u}_1 = J\mathbf u_1$ and
-$\dot{\mathbf u}_2 = J\mathbf u_2$.
+First, $\mathbf a$ and $\mathbf b$ are not parallel: otherwise $\mathbf v$
+would be a complex multiple of a real vector $\mathbf w \ne 0$, and
+$J\mathbf w = \lambda\mathbf w$ is impossible because $J\mathbf w$ is real and
+$\lambda\mathbf w$ is not. So every $\mathbf u$ can be written as
+$p\,\mathbf a - q\,\mathbf b$, in one way.
 
-At $t = 0$, $\mathbf u_1 = \mathbf a$ and $\mathbf u_2 = \mathbf b$. These are
-not parallel: otherwise $\mathbf v$ would be a complex multiple of a real
-vector $\mathbf w \ne 0$, and $J\mathbf w = \lambda\mathbf w$ is impossible
-because $J\mathbf w$ is real and $\lambda\mathbf w$ is not. So every initial
-value is $c_1\mathbf a + c_2\mathbf b$, and
-{prf:ref}`prop-pp-superposition` and uniqueness finish the proof as before.
+By {eq}`eq-pp-tilted-frame`, $\mathbf u = p\,\mathbf a - q\,\mathbf b$ solves
+$\dot{\mathbf u} = J\mathbf u$ exactly when $(p, q)$ solves the system of
+{prf:ref}`ex-pp-spiral`. In complex form that system is $\dot z = \lambda z$
+with $z = p + iq$, so $z = (p_0 + iq_0)\,e^{\alpha t}(\cos\omega t + i\sin\omega t)$,
+and
+
+$$
+p = e^{\alpha t}\big(p_0\cos\omega t - q_0\sin\omega t\big),
+\qquad
+q = e^{\alpha t}\big(p_0\sin\omega t + q_0\cos\omega t\big).
+$$
+
+Collecting the terms with $p_0$ and with $q_0$,
+$p\,\mathbf a - q\,\mathbf b = p_0\,\mathbf u_1(t) - q_0\,\mathbf u_2(t)$.
+This is the claim with $c_1 = p_0$ and $c_2 = -q_0$, and at $t = 0$ it reads
+$\mathbf u(0) = c_1\mathbf a + c_2\mathbf b$.
+
+Equivalently, $\mathbf u_1 + i\,\mathbf u_2 = e^{\lambda t}\mathbf v$: the two
+solutions are the real and imaginary parts of the complex solution that
+{prf:ref}`prop-pp-eigen-solutions` gives.
 :::
 
 The brackets in {eq}`eq-pp-complex` are periodic with period $2\pi/\omega$:
-on their own they go around an ellipse in the plane. The factor $e^{\alpha t}$
-shrinks the ellipse if $\alpha < 0$ and grows it if $\alpha > 0$, so
-trajectories are **spirals**. If $\alpha = 0$ the ellipse neither shrinks
-nor grows, and the orbits are closed: a **center**. The imaginary part
-$\omega$ sets the rotation, and the real part $\alpha$ alone decides
-stability.
+on their own they go around an ellipse. The factor $e^{\alpha t}$ shrinks the
+ellipse if $\alpha < 0$ and grows it if $\alpha > 0$, so trajectories are
+**spirals**. If $\alpha = 0$ the ellipse neither shrinks nor grows, and the
+orbits are closed: a **center**. The imaginary part $\omega$ sets the
+rotation, and the real part $\alpha$ alone decides stability. Since
+$\alpha = T/2$, that is the sign of the trace.
 
-:::{prf:example} A pure spiral
-:label: ex-pp-spiral
+:::{prf:example} A tilted spiral
+:label: ex-pp-tilted-spiral
 
 Take
 
 $$
-J = \begin{pmatrix} \alpha & -\omega \\ \omega & \alpha \end{pmatrix},
-\qquad \omega > 0 .
+J = \begin{pmatrix} 0.8 & -2 \\ 1 & -1.2 \end{pmatrix},
+\qquad T = -0.4, \quad \Delta = 1.04 ,
 $$
 
-Then $J\mathbf v = (\alpha + i\omega)\mathbf v$ for $\mathbf v = (1, -i)$, so
-$\mathbf a = (1, 0)$, $\mathbf b = (0, -1)$, and {eq}`eq-pp-complex` gives
+so that $\lambda = -0.2 \pm i$. For an eigenvector of $\lambda = -0.2 + i$,
+the second row of $(J - \lambda I)\mathbf v = 0$ reads
+$v_1 + (-1.2 - \lambda)\,v_2 = 0$, so $v_1 = (1 + i)\,v_2$. Taking $v_2 = 1$,
+$\mathbf v = (1 + i, 1)$, hence $\mathbf a = (1, 1)$ and $\mathbf b = (1, 0)$.
+The solution that starts at $\mathbf a$ is
 
 $$
-\mathbf u_1(t) = e^{\alpha t}\begin{pmatrix}\cos\omega t\\ \sin\omega t\end{pmatrix},
-\qquad
-\mathbf u_2(t) = e^{\alpha t}\begin{pmatrix}\sin\omega t\\ -\cos\omega t\end{pmatrix}.
+\mathbf u_1(t) = e^{-0.2t}\begin{pmatrix} \cos t - \sin t \\ \cos t \end{pmatrix}.
 $$
 
-The solution $\mathbf u_1$ is at distance $e^{\alpha t}$ from the origin and
-at angle $\omega t$: it turns counterclockwise at the constant rate $\omega$
-while its distance shrinks or grows at the rate $\alpha$.
+It turns once every $2\pi$ time units, from $\mathbf a = (1, 1)$ towards
+$-\mathbf b = (-1, 0)$, that is, counterclockwise, and loses the factor
+$e^{-0.4\pi} \approx 0.28$ of its size on every turn.
 :::
+
+```{code-cell} python
+:tags: [hide-input]
+alpha, omega = -0.2, 1.0
+M = np.array([[alpha, -omega], [omega, alpha]])  # the example, eq-pp-polar
+a, b = np.array([1.0, 1.0]), np.array([1.0, 0.0])
+E = np.column_stack([a, -b])                     # tilted frame: columns a, -b
+s = np.linspace(0, 2 * np.pi, 300)
+tt = np.linspace(0, 14, 1400)
+
+fig, axs = plt.subplots(1, 2, figsize=(7.0, 3.3))
+for ax, frame, lim, labels, title in (
+        (axs[0], np.eye(2), 1.35, ("$(1, 0)$", "$(0, 1)$"), "turning and stretching"),
+        (axs[1], E, 1.6, (r"$\mathbf{a}$", r"$-\mathbf{b}$"), "the same, on a tilted frame")):
+    for rr in (1.0, np.exp(2 * np.pi * alpha / omega)):     # one turn apart
+        ax.plot(*(frame @ np.array([rr * np.cos(s), rr * np.sin(s)])),
+                color=C_GREY, lw=0.8, ls=":")
+    Z = frame @ np.array([expm(M * t) @ [1.0, 0.0] for t in tt]).T
+    ax.plot(*Z, color=C_EXACT, lw=1.1)
+    for i in (120, 440):
+        ax.annotate("", xy=Z[:, i + 12], xytext=Z[:, i],
+                    arrowprops=dict(arrowstyle="-|>", color=C_EXACT, lw=0.9))
+    for vec, lab, off in zip(frame.T, labels, ((4, -10), (-6, 6))):
+        ax.annotate("", xy=vec, xytext=(0, 0),
+                    arrowprops=dict(arrowstyle="-|>", color=C_OUTER, lw=1.4))
+        ax.annotate(lab, xy=vec, xytext=off, textcoords="offset points",
+                    color=C_OUTER, fontsize=9)
+    mark(ax, 0, 0, True, ms=5)
+    ax.set_xlim(-lim, lim); ax.set_ylim(-lim, lim); ax.set_aspect("equal")
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.spines["top"].set_visible(True); ax.spines["right"].set_visible(True)
+    ax.set_title(title, fontsize=9)
+fig.tight_layout();
+```
+
+Left: {prf:ref}`ex-pp-spiral` with $\alpha = -0.2$, $\omega = 1$, started at
+$(1, 0)$. Dotted: circles one turn apart, the second $e^{-0.4\pi} \approx 0.28$
+times the first. Right: the matrix of {prf:ref}`ex-pp-tilted-spiral`, started at
+$\mathbf a$. It is the left picture with $(1, 0)$ moved to $\mathbf a$ and
+$(0, 1)$ moved to $-\mathbf b$: circles become ellipses, and the spiral
+follows them.
 
 ## Repeated eigenvalues
 
